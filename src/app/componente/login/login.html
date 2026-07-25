@@ -1,0 +1,37 @@
+<div class="board-background">
+  <div class="login-wrapper">
+
+    <mat-card class="dark-card">
+      <mat-card-header class="text-center" style="display: block; margin-bottom: 1.5rem;">
+        <mat-card-title class="card-title">Iniciar Sesión</mat-card-title>
+        <mat-card-subtitle class="card-subtitle">Y retoma la partida</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="dark-input full-width">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput type="email" formControlName="email" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="dark-input full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="contrasena" required>
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <button mat-raised-button class="btn-login-large full-width" type="submit" [disabled]="loginForm.invalid">
+            Entrar
+          </button>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions class="text-center" style="display: block; margin-top: 1rem;">
+        <p class="card-text">¿No tienes cuenta? <a [routerLink]="['/register']" class="auth-link">Regístrate aquí</a></p>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>

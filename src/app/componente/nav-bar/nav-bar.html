@@ -1,0 +1,28 @@
+<mat-toolbar class="dark-nav">
+  <mat-toolbar-row>
+    <span class="brand-title" (click)="goHome()" style="cursor: pointer;">Grandmaster's Edge</span>
+
+    <span class="spacer"></span>
+
+    <div class="nav-actions">
+      @if (!isLoggedIn()) {
+        <button mat-button [routerLink]="['/']" fragment="juego" class="nav-btn">El Juego</button>
+        <button mat-button [routerLink]="['/']" fragment="perfil" class="nav-btn">Sobre Mí</button>
+        <button mat-button [routerLink]="['']" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}" class="btn-inicio">
+          Inicio
+        </button>
+        <button mat-raised-button [routerLink]="['/login']" routerLinkActive="activo" class="btn-login">
+          Iniciar Sesión
+        </button>
+        <button mat-raised-button [routerLink]="['/register']" routerLinkActive="activo" class="btn-register">
+          Registrarse
+        </button>
+      }
+      @else {
+        <button mat-raised-button (click)="logout()" class="btn-register">
+          Salir
+        </button>
+      }
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

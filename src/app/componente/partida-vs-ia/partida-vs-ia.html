@@ -1,0 +1,221 @@
+<div class="board-background">
+  <div class="menu-wrapper">
+    <div class="dashboard-layout">
+      <div class="left-column">
+        <mat-card class="dashboard-panel player-panel">
+          <mat-card-header class="panel-header">
+            <mat-icon class="panel-icon glowing-icon">account_circle</mat-icon>
+            <mat-card-title class="player-name">
+              @if(jugador) { {{ jugador.nombreCompleto }} {{ jugador.apellidoCompleto }} }
+            </mat-card-title>
+            <mat-card-subtitle class="player-title">
+              @if(jugador) {
+                Rango:
+                <strong [style.color]="getRankColor(jugador.elo)">
+                  {{ getRankName(jugador.elo) }}
+                </strong>
+              }
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="panel-content">
+            <div class="elo-box">
+              <mat-icon>trending_up</mat-icon>
+              <div class="elo-details">
+                <span class="elo-label">Nivel ELO</span>
+                <span class="elo-score">@if(jugador) { {{ jugador.elo }} }</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        @if(partida) {
+          <mat-card class="dashboard-panel stats-panel">
+            <div class="stats-item"><span>Partida:</span> <strong>#{{ partida.nroPartida }}</strong></div>
+            <div class="stats-item vs-item"><span>VS:</span> <strong>{{ partida.nombreContrincante }}</strong></div>
+            <div class="stats-item"><span>Fecha:</span> <strong>{{ partida.fecha | date:'shortDate' }}</strong></div>
+            <div class="stats-item"><span>Estado:</span> <strong [class]="partida.estado === 'En espera' ? 'status-wait' : 'status-active'">{{ partida.estado }}</strong></div>
+          </mat-card>
+        }
+      </div>
+
+      <div class="center-panel">
+        <mat-card class="dashboard-panel board-panel">
+          <mat-card-content class="chess-wrapper">
+            <div class="rank-labels">
+              <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+            </div>
+
+            <div class="chess-board">
+              @if(partidaEnCurso) {
+                <div class="global-elapsed-timer">
+                  <mat-icon>schedule</mat-icon>
+                  <span>{{ formatoGlobal(tiempoTotalSegundos) }}</span>
+                </div>
+              }
+              <div class="captured-pieces captured-top">
+                @for(p of capturedByBlack; track $index) {
+                  <span class="captured-piece piece-blanca">{{ getPieceUnicodeDirect(p, 'w') }}</span>
+                }
+              </div>
+              <div class="game-timer opponent-timer" [class.active-turn]="partidaEnCurso && !turnoJugador">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ partidaEnCurso ? formatoCountdown(tiempoIASegundos) : tiempoSeleccionado }}</span>
+              </div>
+
+              <div class="board-grid">
+                @for(square of boardSquares; track square.id) {
+                  <div class="square"
+                       [class.light]="square.light"
+                       [class.dark]="!square.light"
+                       [class.selected]="selectedSquare === square.id"
+                       [class.capture-target]="captureMoves.includes(square.id)"
+                       (click)="onSquareClick(square.id)">
+                    @if(possibleMoves.includes(square.id)) {
+                      <div class="move-dot"></div>
+                    }
+                  </div>
+                }
+              </div>
+
+              @for(p of pieces; track p.id) {
+                <div class="piece-wrapper"
+                     [style.left.%]="getColIndex(p.square) * 12.5"
+                     [style.top.%]="getRowIndex(p.square) * 12.5"
+                     [ngClass]="p.color === 'w' ? 'piece-blanca' : 'piece-negra'"
+                     (click)="onSquareClick(p.square); $event.stopPropagation()"
+                     (mousedown)="iniciarFlecha($event, p.square)"
+                     (mouseup)="terminarFlecha($event, p.square)"
+                     (contextmenu)="prevenirMenuContextual($event)">
+                  {{ getPieceUnicodeDirect(p.type, p.color) }}
+                </div>
+              }
+              <div class="captured-pieces captured-bottom">
+                @for(p of capturedByWhite; track $index) {
+                  <span class="captured-piece piece-negra">{{ getPieceUnicodeDirect(p, 'b') }}</span>
+                }
+              </div>
+              <div class="game-timer player-timer" [class.active-turn]="partidaEnCurso && turnoJugador">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ partidaEnCurso ? formatoCountdown(tiempoJugadorSegundos) : tiempoSeleccionado }}</span>
+              </div>
+            </div>
+
+            <div class="file-labels">
+              <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="right-column">
+        <mat-card class="dashboard-panel history-panel">
+          <mat-card-header class="panel-header text-center">
+            <mat-card-title>Historial de Movimientos</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="history-content">
+            <div class="moves-list">
+              @for(move of moveHistoryPairs; track move.turn) {
+                <div class="move-row">
+                  <span class="turn-number">{{ move.turn }}.</span>
+
+                  <span class="move-white clickable-move"
+                        [class.reviewing-active]="isActiveMove(move.whiteIndex)"
+                        (click)="reviewMove(move.whiteIndex)">
+                    {{ move.white }}
+                  </span>
+
+                  @if (move.blackIndex !== null) {
+                    <span class="move-black clickable-move"
+                          [class.reviewing-active]="isActiveMove(move.blackIndex)"
+                          (click)="reviewMove(move.blackIndex)">
+                      {{ move.black }}
+                    </span>
+                  } @else {
+                    <span class="move-black"></span>
+                  }
+                </div>
+              }
+              @if(moveHistoryPairs.length === 0) {
+                <div class="no-moves">Sin movimientos aún...</div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-panel actions-panel">
+          <mat-card-header class="panel-header text-center">
+            <mat-card-title>Modos de Juego</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="actions-content">
+            <button mat-raised-button class="game-btn play-btn" [class.quit-btn]="partidaEnCurso" (click)="jugar()">
+              <mat-icon>{{ partidaEnCurso ? 'close' : 'play_arrow' }}</mat-icon>
+              <div class="btn-text">
+                <span>{{ partidaEnCurso ? 'Salir de la partida' : 'Jugar' }}</span>
+                <small>{{ partidaEnCurso ? 'Abandonar juego' : 'Iniciar enfrentamiento' }}</small>
+              </div>
+            </button>
+            <button mat-raised-button class="game-btn tune-btn" (click)="ajustarNivel()" [disabled]="partidaEnCurso">
+              <mat-icon>tune</mat-icon>
+              <div class="btn-text">
+                <span>Ajustar Nivel IA</span>
+                <small>Cambiar dificultad</small>
+              </div>
+            </button>
+            <button mat-raised-button class="game-btn time-btn" (click)="ajustarTiempo()" [disabled]="partidaEnCurso">
+              <mat-icon>schedule</mat-icon>
+              <div class="btn-text">
+                <span>Ajustar Tiempo</span>
+                <small>Límite por jugador</small>
+              </div>
+            </button>
+            <button mat-raised-button class="game-btn exit-btn" (click)="salir()" [disabled]="partidaEnCurso">
+              <mat-icon>logout</mat-icon>
+              <div class="btn-text">
+                <span>Salir</span>
+                <small>Volver al menú</small>
+              </div>
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showVictoryModal) {
+  <div class="custom-modal-overlay">
+    <div class="custom-modal-content slider-modal text-center" style="max-width: 400px; text-align: center;">
+      <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 20px;">
+        <mat-icon style="font-size: 64px; height: 64px; width: 64px; color: #ffca28;">emoji_events</mat-icon>
+      </div>
+      <h2 style="font-size: 2rem; color: #fff; margin-bottom: 10px;">{{ victoryReason }}</h2>
+      <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 30px;">Ganador: <strong style="color: #ffca28;">{{ victoryWinnerName }}</strong></p>
+      <button mat-raised-button class="btn-volver" (click)="showVictoryModal = false; resetGame()">
+        Volver
+      </button>
+    </div>
+  </div>
+}
+
+@if (showNiveles) {
+  <div class="custom-modal-overlay" (click)="showNiveles = false">
+    <div class="custom-modal-content slider-modal" (click)="$event.stopPropagation()" [style.--rank-color]="currentRank.color">
+      <div class="modal-header"><h2>Nivel de IA</h2><button mat-icon-button class="close-btn" (click)="showNiveles = false"><mat-icon>close</mat-icon></button></div>
+      <div class="rank-display"><div class="rank-icon-wrapper"><mat-icon class="dynamic-rank-icon">{{ currentRank.icon }}</mat-icon></div><h3 class="dynamic-rank-name">{{ currentRank.name }}</h3><div class="dynamic-elo-value">{{ selectedElo }} ELO</div></div>
+      <div class="slider-container"><input type="range" min="0" max="1600" step="10" [(ngModel)]="selectedElo" class="elo-slider"><div class="slider-labels"><span>0</span><span>1600+</span></div></div>
+      <button mat-raised-button class="confirm-level-btn" (click)="confirmarNivel()">Confirmar Selección</button>
+    </div>
+  </div>
+}
+
+@if (showTiempos) {
+  <div class="custom-modal-overlay" (click)="showTiempos = false">
+    <div class="custom-modal-content slider-modal template-purple-theme" (click)="$event.stopPropagation()">
+      <div class="modal-header"><h2>Tiempo de Partida</h2><button mat-icon-button class="close-btn" (click)="showTiempos = false"><mat-icon>close</mat-icon></button></div>
+      <div class="rank-display"><div class="time-icon-wrapper"><mat-icon class="dynamic-time-icon">schedule</mat-icon></div><h3 class="dynamic-time-name">{{ tiemposDisponibles[selectedTimeIndex] }}</h3><div class="dynamic-elo-value">Límite por jugador</div></div>
+      <div class="slider-container"><input type="range" min="0" max="15" step="1" [(ngModel)]="selectedTimeIndex" class="time-slider"><div class="slider-labels"><span>15s</span><span>∞</span></div></div>
+      <button mat-raised-button class="confirm-time-btn" (click)="confirmarTiempo()">Confirmar Selección</button>
+    </div>
+  </div>
+}

@@ -1,0 +1,142 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: block;
+  width: 100%;
+}
+
+.dark-nav {
+  background-color: #0d0d0d !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #333;
+}
+
+mat-toolbar-row {
+  padding: 0 2rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.brand-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffd700;
+  letter-spacing: 1px;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-btn {
+  color: #ffd700 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-btn:hover, .nav-btn.activo {
+  color: #ffffff !important;
+}
+
+.btn-login {
+  background-color: transparent !important;
+  color: #ffd700 !important;
+  border: 1px solid #ffd700 !important;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #ffd700 !important;
+  color: #000000 !important;
+}
+
+.btn-register {
+  background-color: #ffd700 !important;
+  color: #000000 !important;
+  font-weight: bold;
+  border: 1px solid #ffd700 !important;
+  transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+  background-color: #000000 !important;
+  color: #ffd700 !important;
+}
+
+.btn-inicio{
+  color: #ffffff !important;
+  font-weight: 500;
+  transition: color 0.3s ease !important;
+}
+
+.btn-inicio:hover {
+  color: #ffd700 !important;
+}
+
+/* ======== PANTALLAS ULTRA ANCHAS (2K / 4K) ======== */
+@media (min-width: 2560px) {
+  mat-toolbar-row {
+    padding: 0 4rem;
+    max-width: 2400px;
+    margin: 0 auto;
+    height: 80px;
+  }
+  .brand-title {
+    font-size: 2rem;
+  }
+  .btn-login, .btn-register {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+/* ======== TABLETS Y MÓVILES ======== */
+@media (max-width: 768px) {
+  mat-toolbar-row {
+    padding: 0 0.8rem;
+    height: 55px;
+  }
+
+  .brand-title {
+    font-size: 1rem !important;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-btn,
+  .btn-inicio {
+    display: none !important;
+  }
+
+  .nav-actions {
+    gap: 0.4rem;
+  }
+
+  .btn-login,
+  .btn-register {
+    font-size: 0.72rem !important;
+    padding: 0.2rem 0.5rem !important;
+  }
+}
+
+/* ======== MÓVILES PEQUEÑOS (IPHONES / ANDROID) ======== */
+@media (max-width: 400px) {
+  mat-toolbar-row {
+    padding: 0 0.5rem;
+  }
+
+  .brand-title {
+    font-size: 0.9rem !important;
+  }
+
+  .btn-login,
+  .btn-register {
+    font-size: 0.65rem !important;
+    padding: 0.15rem 0.4rem !important;
+  }
+}

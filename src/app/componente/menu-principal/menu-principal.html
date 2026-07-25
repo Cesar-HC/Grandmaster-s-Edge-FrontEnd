@@ -1,0 +1,355 @@
+<div class="board-background">
+  <div class="menu-wrapper">
+    <div class="dashboard-layout">
+
+      <mat-card class="dashboard-panel player-panel">
+        <mat-card-header class="panel-header">
+          <mat-icon class="panel-icon glowing-icon">account_circle</mat-icon>
+          <mat-card-title class="player-name">{{jugador?.nombreCompleto}} {{jugador?.apellidoCompleto}}</mat-card-title>
+          <mat-card-subtitle class="player-title">
+              @if(jugador) {
+                Rango:
+                <strong [style.color]="getRankColor(jugador.elo)">
+                  {{ getRankName(jugador.elo) }}
+                </strong>
+              }
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="panel-content">
+          <div class="elo-box">
+            <mat-icon>trending_up</mat-icon>
+            <div class="elo-details">
+              <span class="elo-label">Nivel ELO</span>
+              <span class="elo-score">{{jugador.elo}}</span>
+            </div>
+          </div>
+          <button mat-stroked-button class="view-ranks-btn" (click)="showRanks = true">
+            <mat-icon>leaderboard</mat-icon> Ver Rangos
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="dashboard-panel board-panel">
+        <mat-card-content class="chess-wrapper">
+          <div class="rank-labels">
+            <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+          </div>
+
+          <div class="chess-board">
+            <div class="row r8">
+              <span>♜</span><span>♞</span><span>♝</span><span>♛</span><span>♚</span><span>♝</span><span>♞</span><span>♜</span>
+            </div>
+            <div class="row r7">
+              <span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span>
+            </div>
+
+            <div class="row r2">
+              <span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span><span>♟</span>
+            </div>
+            <div class="row r1">
+              <span>♜</span><span>♞</span><span>♝</span><span>♛</span><span>♚</span><span>♝</span><span>♞</span><span>♜</span>
+            </div>
+          </div>
+
+          <div class="file-labels">
+            <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="dashboard-panel actions-panel">
+        <mat-card-header class="panel-header text-center">
+          <mat-card-title>Modos de Juego</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="actions-content">
+          <div class="match-button-wrapper">
+            @if(isSearching) {
+              <div class="search-timer-label">
+                <mat-icon style="font-size: 16px; width: 16px; height: 16px;">schedule</mat-icon>
+                {{ formatSearchTime(searchTimeSeconds) }}
+              </div>
+            }
+            <button mat-raised-button class="game-btn match-btn" [class.searching]="isSearching" (click)="toggleSearch()">
+              <mat-icon>public</mat-icon>
+
+              <div class="btn-text">
+                @if(!isSearching) {
+                  <span>Buscar Partida</span>
+                  <small>Oponente aleatorio por ELO</small>
+                } @else {
+                  <span class="animated-searching-text">Buscando Partida...</span>
+                  <small style="color: #ffca28; font-size: 0.7rem; white-space: nowrap;">Click de nuevo para cancelar</small>
+                }
+              </div>
+            </button>
+          </div>
+
+          <button mat-raised-button class="game-btn private-btn" (click)="showCreateRoomModal = true">
+            <mat-icon>add_box</mat-icon>
+            <div class="btn-text">
+              <span>Crear Privada</span>
+              <small>Juega con un amigo</small>
+            </div>
+          </button>
+          <button mat-raised-button class="game-btn join-btn" (click)="openJoinModal()">
+            <mat-icon>meeting_room</mat-icon>
+            <div class="btn-text">
+              <span>Unirse a Privada</span>
+              <small>Ingresa con un código</small>
+            </div>
+          </button>
+          <button mat-raised-button class="game-btn ai-btn" [routerLink]="['/partida-vs-ia', idJugador]">
+            <mat-icon>smart_toy</mat-icon>
+            <div class="btn-text">
+              <span>Jugar vs IA</span>
+              <small>Entrena contra la máquina</small>
+            </div>
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+    </div> </div>
+</div>
+
+@if (showRanks) {
+  <div class="ranks-modal-overlay" (click)="showRanks = false">
+    <div class="ranks-modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Escala de Rangos Globales</h2>
+        <button mat-icon-button class="close-btn" (click)="showRanks = false">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="ranks-steps-container">
+        <div class="rank-step rank-hierro">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">filter_tilt_shift</mat-icon>
+            <span class="step-name">Hierro</span>
+            <span class="step-elo">0-199</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-plata">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">brightness_5</mat-icon>
+            <span class="step-name">Plata</span>
+            <span class="step-elo">200-399</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-oro">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">stars</mat-icon>
+            <span class="step-name">Oro</span>
+            <span class="step-elo">400-599</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-platino">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">verified</mat-icon>
+            <span class="step-name">Platino</span>
+            <span class="step-elo">600-799</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-esmeralda">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">diamond</mat-icon>
+            <span class="step-name">Esmeralda</span>
+            <span class="step-elo">800-999</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-diamante">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">radio_button_checked</mat-icon>
+            <span class="step-name">Diamante</span>
+            <span class="step-elo">1000-1199</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-maestro">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">psychology</mat-icon>
+            <span class="step-name">Maestro</span>
+            <span class="step-elo">1200-1399</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-granmaestro">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">military_tech</mat-icon>
+            <span class="step-name">G. Maestro</span>
+            <span class="step-elo">1400-1599</span>
+          </div>
+        </div>
+
+        <div class="rank-step rank-tops">
+          <div class="step-bar"></div>
+          <div class="step-info">
+            <mat-icon class="rank-icon">emoji_events</mat-icon>
+            <span class="step-name">Tops Glob.</span>
+            <span class="step-elo">1600+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (showMatchFoundModal) {
+  <div class="match-found-overlay">
+    <div class="match-found-card">
+      <h2 class="match-found-title">¡Se encontró un oponente!</h2>
+
+      <div class="match-progress-container">
+        <div class="match-progress-fill" [style.width.%]="matchAcceptProgress"></div>
+      </div>
+
+      <div class="match-actions">
+        <button mat-raised-button class="accept-match-btn" (click)="acceptMatch()">
+          <span class="wave-yellow-text">Aceptar enfrentamiento</span>
+        </button>
+
+        <button mat-raised-button class="decline-match-btn" (click)="declineMatch()">
+          Cancelar enfrentamiento
+        </button>
+      </div>
+    </div>
+  </div>
+}
+@if (showCreateRoomModal) {
+  <div class="ranks-modal-overlay" (click)="showCreateRoomModal = false">
+    <div class="ranks-modal-content create-room-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header" style="justify-content: center; border-bottom: none; padding-bottom: 0;">
+        <h2 style="font-size: 1.6rem; color: #fff; margin: 0; text-align: center;">
+          Sala de: <span style="color: #ffca28;">{{jugador.nombreCompleto}} {{jugador.apellidoCompleto}}</span>
+        </h2>
+      </div>
+
+      <div class="room-form-container">
+        <div class="form-group checkbox-group">
+          <label class="custom-checkbox-label">
+            <input type="checkbox" [(ngModel)]="isRoomPrivate" class="custom-checkbox">
+            Sala Privada (Requiere Contraseña)
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Contraseña de la Sala</label>
+          <input type="password"
+                 class="custom-input"
+                 placeholder="Digita una contraseña..."
+                 [(ngModel)]="roomPassword"
+                 [disabled]="!isRoomPrivate"
+                 [class.disabled-input]="!isRoomPrivate">
+        </div>
+
+        <div class="form-group">
+          <label>Número de Jugadores (Máximo)</label>
+          <input type="number"
+                 class="custom-input"
+                 placeholder="Ej: 2"
+                 min="2"
+                 [(ngModel)]="roomMaxPlayers">
+        </div>
+
+      </div>
+
+      <div class="room-actions">
+        <button mat-raised-button class="btn-crear-sala" (click)="createRoom()">
+          Crear
+        </button>
+        <button mat-raised-button class="btn-salir-sala" (click)="showCreateRoomModal = false">
+          Salir
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
+@if (showJoinRoomModal) {
+  <div class="ranks-modal-overlay" (click)="showJoinRoomModal = false">
+    <div class="ranks-modal-content join-room-modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header" style="justify-content: center; border-bottom: none; padding-bottom: 0;">
+        <h2 style="font-size: 1.6rem; color: #fff; margin: 0; text-align: center;">Salas Disponibles</h2>
+      </div>
+
+      <div class="search-box-container">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" class="custom-input search-input" placeholder="Buscar por código o nombre..." [(ngModel)]="searchQuery">
+      </div>
+
+      <div class="room-list">
+        @for (room of filteredRooms; track room.codigo) {
+          <div class="room-item" (click)="selectRoom(room)">
+
+            <div class="room-info-left">
+              <div class="room-name">{{ room.nombre }}</div>
+              <div class="room-code">Código: {{ room.codigo }}</div>
+            </div>
+
+            <div class="room-info-right">
+              <div class="room-badge" [class.badge-private]="room.privada" [class.badge-public]="!room.privada">
+                <mat-icon>{{ room.privada ? 'lock' : 'public' }}</mat-icon>
+                {{ room.privada ? 'Privada' : 'Pública' }}
+              </div>
+              <div class="room-badge badge-players">
+                <mat-icon>group</mat-icon>
+                {{ room.actuales }}/{{ room.maximos }}
+              </div>
+              <div class="room-badge" [class.badge-active]="room.enCurso" [class.badge-waiting]="!room.enCurso">
+                {{ room.enCurso ? 'En Curso' : 'En Espera' }}
+              </div>
+            </div>
+
+          </div>
+        }
+
+        @if (filteredRooms.length === 0) {
+          <div class="no-rooms-msg">No se encontraron salas que coincidan con tu búsqueda.</div>
+        }
+      </div>
+
+      <div class="room-actions">
+        <button mat-raised-button class="btn-salir-sala" (click)="showJoinRoomModal = false">
+          Volver al menú
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
+
+@if (showPasswordPromptModal) {
+  <div class="ranks-modal-overlay" (click)="showPasswordPromptModal = false">
+    <div class="ranks-modal-content create-room-modal" (click)="$event.stopPropagation()" style="text-align: center;">
+
+      <div class="modal-header" style="justify-content: center; border-bottom: none; padding-bottom: 0;">
+        <h2 style="font-size: 1.6rem; color: #fff; margin: 0; text-align: center;">Sala Privada</h2>
+      </div>
+
+      <p style="color: #aaa; margin-bottom: 5px; margin-top: 0;">
+        Contraseña requerida para unirse a:<br>
+        <strong style="color: #ffca28; font-size: 1.1rem;">{{ selectedRoomToJoin?.nombre }}</strong>
+      </p>
+
+      <input type="password" class="custom-input" placeholder="Digita la contraseña..." [(ngModel)]="enteredPassword" style="text-align: center;">
+
+      <div class="room-actions" style="margin-top: 5px;">
+        <button mat-raised-button class="btn-crear-sala" (click)="confirmJoinPrivate()">Unirse</button>
+        <button mat-raised-button class="btn-salir-sala" (click)="showPasswordPromptModal = false">Salir</button>
+      </div>
+
+    </div>
+  </div>
+}

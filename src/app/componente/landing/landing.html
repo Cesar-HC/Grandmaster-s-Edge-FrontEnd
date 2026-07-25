@@ -1,0 +1,102 @@
+<div class="landing-container">
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Grandmaster's Edge</h1>
+      <p class="slogan">Donde la táctica pura domina el tablero.</p>
+      <button mat-raised-button class="cta-button" (click)="scrollTo('auth')">
+        Jugar Ahora
+      </button>
+    </div>
+    <div class="hero-image diagonal-carousel" (mouseenter)="pausarCarrusel()" (mouseleave)="reanudarCarrusel()">
+      <button class="carousel-btn prev-btn" (click)="prevSlide()">&#10094;</button>
+      <div class="carousel-stack">
+        @for (img of carouselImages; track $index) {
+          <img [src]="img" class="stacked-slide" [ngClass]="getSlideClass($index)">
+        }
+      </div>
+      <button class="carousel-btn next-btn" (click)="nextSlide()">&#10095;</button>
+    </div>
+  </section>
+  <div class="board-background">
+    <section id="juego" class="description-section scroll-reveal">
+      <h2 class="section-title">Domina cada movimiento</h2>
+      <div class="features-grid">
+        <mat-card class="dark-card">
+          <mat-card-header>
+            <mat-card-title class="card-title">Multijugador en Tiempo Real</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="card-text">Enfréntate a oponentes de todo el mundo y demuestra tu nivel estratégico sin demoras ni interrupciones.</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dark-card">
+          <mat-card-header>
+            <mat-card-title class="card-title">Desafía a la IA</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="card-text">Entrena en solitario contra nuestro bot impulsado por Inteligencia Artificial. Adapta el nivel de dificultad y pon a prueba tu estrategia antes de enfrentarte al mundo.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <mat-card class="dark-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">Sistema de ELO Competitivo</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="card-text">Demuestra tu verdadero nivel con nuestro emparejamiento basado en ELO. Escala posiciones en las ligas, supera a tus rivales y alcanza el codiciado título de Gran Maestro en la clasificación global.</p>
+        </mat-card-content>
+      </mat-card>
+    </section>
+
+    <section id="perfil" class="about-section scroll-reveal">
+      <h2 class="section-title">Acerca de mí</h2>
+      <mat-card class="profile-card dark-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">César Ángel Huerta Cárcamo</mat-card-title>
+          <mat-card-subtitle class="card-subtitle">Ingeniería de Sistemas de Información (UPC)</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <img src="/assets/chessboard.png" alt="Tablero de Ajedrez">
+          <p class="card-text">
+            ¡Buenas! Soy César Ángel Huerta Cárcamo, estudiante de Ingeniería de Sistemas de Información en la Universidad Peruana de Ciencias Aplicadas (UPC) y me encuentro en el décimo superior de mi respectiva carrera. <br>
+            Mi enfoque actual incluye el desarrollo web, tanto Backend como Frontend, así como la gestión de análisis de datos con Dashboards. Me gusta innovar al implementar soluciones tecnológicas, además de liderar y organizar el trabajo en equipo dentro de los proyectos. <br>
+            Domino la gestión de bases de datos en SQL (PostgreSQL, SQL Server) y NoSQL (MongoDB). <br>
+            Tengo conocimiento en programación C#, C++, Python, desarrollo Backend con Java (Spring Boot), y Frontend con Angular (HTML, CSS y TypeScript). Además, manejo herramientas de análisis de datos como Microsoft Excel y herramientas de BI como: Microsoft Power Bi, Google Data Studio y Tableau. <br>
+            Actualmente, me encuentro interesado en oportunidades de prácticas preprofesionales y proyectos relacionados con desarrollo de software y análisis de datos mediante Dashboards, donde pueda seguir fortaleciendo mis habilidades y adquirir experiencia en un entorno profesional.
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="profile-actions">
+          <a mat-stroked-button class="github-btn" href="https://github.com/TU_USUARIO" target="_blank">
+            Ver mis proyectos en GitHub
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+
+    <section id="auth" class="auth-section scroll-reveal">
+      <div class="auth-container dark-card">
+        <h2 class="section-title text-center">Únete a la partida</h2>
+        <p class="card-text text-center">Guarda tu progreso, tu rango y tu historial de partidas.</p>
+
+        <div class="auth-buttons">
+          <button mat-raised-button class="btn-login-large" [routerLink]="['/login']">
+            Iniciar Sesión
+          </button>
+          <button mat-raised-button class="btn-register-large" [routerLink]="['/register']">
+            Crear una Cuenta
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<footer class="landing-footer">
+  <p class="footer-text">Contáctame:</p>
+  <a mat-fab class="linkedin-btn" href="https://www.linkedin.com/in/cesar-huerta-carcamo-26720b37a/" target="_blank" aria-label="LinkedIn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+    </svg>
+  </a>
+</footer>

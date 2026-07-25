@@ -1,0 +1,269 @@
+.board-background {
+  position: relative;
+  background-color: #030303;
+  background-image: conic-gradient(#0a0a0a 90deg, transparent 90deg 180deg, #0a0a0a 180deg 270deg, transparent 270deg);
+  background-size: 25vw 25vw;
+  background-attachment: fixed;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.board-background::before,
+.board-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-bottom: -12.5vw;
+  width: 12.5vw;
+  height: 12.5vw;
+  background-color: rgba(255, 255, 255, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.board-background::before {
+  animation: random-flash-1 6s infinite;
+}
+
+.board-background::after {
+  animation: random-flash-2 6s infinite;
+  animation-delay: 1.5s;
+}
+
+@keyframes random-flash-1 {
+  0%, 4% { opacity: 0; transform: translate(12.5vw, 12.5vw); }
+  6% { opacity: 1; transform: translate(12.5vw, 12.5vw); }
+  10%, 48% { opacity: 0; transform: translate(12.5vw, 12.5vw); }
+
+  50%, 54% { opacity: 0; transform: translate(62.5vw, 25vw); }
+  56% { opacity: 1; transform: translate(62.5vw, 25vw); }
+  60%, 100% { opacity: 0; transform: translate(62.5vw, 25vw); }
+}
+
+@keyframes random-flash-2 {
+  0%, 4% { opacity: 0; transform: translate(75vw, 0vw); }
+  6% { opacity: 1; transform: translate(75vw, 0vw); }
+  10%, 48% { opacity: 0; transform: translate(75vw, 0vw); }
+
+  50%, 54% { opacity: 0; transform: translate(37.5vw, 37.5vw); }
+  56% { opacity: 1; transform: translate(37.5vw, 37.5vw); }
+  60%, 100% { opacity: 0; transform: translate(37.5vw, 37.5vw); }
+}
+
+.login-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.dark-card {
+  background-color: #121212 !important;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 3rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+::ng-deep .dark-input .mat-mdc-text-field-wrapper {
+  background-color: #1a1a1a !important;
+}
+
+::ng-deep .dark-input input {
+  color: #ffd700 !important;
+}
+
+::ng-deep .dark-input .mdc-floating-label {
+  color: #ffd700 !important;
+}
+
+::ng-deep .dark-input .mat-mdc-form-field-hint {
+  color: #888888 !important;
+}
+
+::ng-deep .dark-input .mdc-floating-label-required-star {
+  color: #ffd700 !important;
+}
+
+::ng-deep .dark-input.mat-focused .mdc-notched-outline__leading,
+::ng-deep .dark-input.mat-focused .mdc-notched-outline__notch,
+::ng-deep .dark-input.mat-focused .mdc-notched-outline__trailing {
+  border-color: #ffd700 !important;
+}
+
+.btn-login-large {
+  background-color: #ffd700 !important;
+  color: #000000 !important;
+  padding: 1.2rem 2rem;
+  font-weight: bold;
+  border: 1px solid #ffd700 !important;
+  width: 100%;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-login-large:hover {
+  background-color: #000000 !important;
+  color: #ffd700 !important;
+}
+
+.card-title {
+  color: #ffd700 !important;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-subtitle {
+  color: #ffffff !important;
+}
+
+.card-text {
+  color: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.auth-link {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+  color: #ffffff;
+}
+
+.btn-login-large.full-width {
+  margin-top: 1rem;
+}
+
+::ng-deep .dark-input button.mat-mdc-icon-button mat-icon {
+  color: #ffd700 !important;
+}
+
+@media (min-width: 2560px) {
+  .login-wrapper {
+    max-width: 700px;
+  }
+  .dark-card {
+    padding: 4rem;
+  }
+  .card-title {
+    font-size: 3rem !important;
+  }
+  .card-subtitle {
+    font-size: 1.5rem !important;
+  }
+  .btn-login-large {
+    font-size: 1.5rem;
+    padding: 1.5rem 2rem;
+  }
+  ::ng-deep .dark-input .mat-mdc-text-field-wrapper {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Reducimos el ancho y el padding interno del card (Eje X e Y) */
+  .login-wrapper {
+    width: 85% !important;
+    max-width: 280px !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .dark-card {
+    padding: 1rem !important;
+    border-radius: 10px !important;
+  }
+
+  .card-title {
+    font-size: 1.3rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .card-subtitle {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .login-form {
+    gap: 0.2rem !important;
+  }
+
+  .btn-login-large {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  ::ng-deep .dark-input .mat-mdc-form-field-subscript-wrapper {
+    height: 12px !important;
+    min-height: 12px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Card todavía más compacto en móviles pequeños */
+  .login-wrapper {
+    width: 90% !important;
+    max-width: 240px !important;
+  }
+
+  .dark-card {
+    padding: 0.75rem !important;
+  }
+
+  .card-title {
+    font-size: 1.1rem !important;
+  }
+
+  .card-subtitle {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .card-text {
+    font-size: 0.75rem !important;
+  }
+
+  .btn-login-large {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.8rem !important;
+  }
+}

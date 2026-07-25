@@ -1,0 +1,499 @@
+<div class="board-background">
+  <div class="menu-wrapper">
+    <div class="dashboard-layout">
+
+      <div class="left-column" style="max-height: 80vh; overflow-y: auto; padding-right: 10px;">
+        @if(esSalaPrivada) {
+          @for(jug of jugadoresEnSala; track jug.id) {
+            <mat-card class="dashboard-panel player-panel" [class.is-spectator]="!jug.jugando" style="margin-bottom: 1rem;">
+              <mat-card-header class="panel-header" style="position: relative;">
+                @if(jug.esLider) {
+                  <mat-icon style="position: absolute; top: -10px; right: -10px; color: #ffca28; font-size: 32px; height: 32px; width: 32px;">workspace_premium</mat-icon>
+                }
+                @if(soyLider && !jug.esLider) {
+                  <button mat-icon-button (click)="transferirLider(jug.id)" style="position: absolute; top: -10px; left: -10px; color: #aaa;" title="Hacer líder">
+                    <mat-icon>military_tech</mat-icon>
+                  </button>
+                }
+                <mat-icon class="panel-icon glowing-icon" [style.color]="jug.jugando ? '#4caf50' : '#888'">
+                  {{ jug.jugando ? 'account_circle' : 'visibility' }}
+                </mat-icon>
+                <mat-card-title class="player-name">{{ jug.nombreCompleto }}</mat-card-title>
+                <mat-card-subtitle class="player-title">
+                  Rango: <strong [style.color]="getRankColor(jug.elo)">{{ getRankName(jug.elo) }}</strong>
+                  @if(!jug.jugando) { <br><span style="color:#aaa; font-style:italic;">(Espectador)</span> }
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content class="panel-content">
+                <div class="elo-box">
+                  <mat-icon style="color: #4caf50;">trending_up</mat-icon>
+                  <div class="elo-details">
+                    <span class="elo-label">ELO</span><span class="elo-score">{{ jug.elo }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          }
+        } @else {
+          <mat-card class="dashboard-panel player-panel">
+            <mat-card-header class="panel-header">
+              <mat-icon class="panel-icon glowing-icon">account_circle</mat-icon>
+              <mat-card-title class="player-name">@if(jugador) { {{ jugador.nombreCompleto }} {{ jugador.apellidoCompleto }} }</mat-card-title>
+              <mat-card-subtitle class="player-title">@if(jugador) { Rango: <strong [style.color]="getRankColor(jugador.elo)">{{ getRankName(jugador.elo) }}</strong> }</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="panel-content"><div class="elo-box"><mat-icon>trending_up</mat-icon><div class="elo-details"><span class="elo-label">Nivel ELO</span><span class="elo-score">@if(jugador) { {{ jugador.elo }} }</span></div></div></mat-card-content>
+          </mat-card>
+          <mat-card class="dashboard-panel player-panel" style="margin-top: 1rem;">
+            <mat-card-header class="panel-header">
+              <mat-icon class="panel-icon" style="color: #f44336; text-shadow: 0 0 15px rgba(244, 67, 54, 0.5);">person_outline</mat-icon>
+              <mat-card-title class="player-name">@if(rival) { {{ rival.nombreCompleto }} {{ rival.apellidoCompleto }} } @else { Conectando... }</mat-card-title>
+              <mat-card-subtitle class="player-title">@if(rival) { Rango: <strong [style.color]="getRankColor(rival.elo)">{{ getRankName(rival.elo) }}</strong> }</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="panel-content"><div class="elo-box" style="border-color: #442222;"><mat-icon style="color: #f44336;">trending_up</mat-icon><div class="elo-details"><span class="elo-label">Nivel ELO</span><span class="elo-score">@if(rival) { {{ rival.elo }} } @else { - }</span></div></div></mat-card-content>
+          </mat-card>
+        }
+
+        @if(partida) {
+          <mat-card class="dashboard-panel stats-panel" style="margin-top: 1rem;">
+            <div class="stats-item"><span>Sala:</span> <strong>{{ salaId | slice:0:8 }}</strong></div>
+            <div class="stats-item vs-item"><span>VS:</span> <strong>@if(rival) { {{ rival.nombreCompleto }} }</strong></div>
+            <div class="stats-item"><span>Fecha:</span> <strong>{{ partida.fecha | date:'shortDate' }}</strong></div>
+            <div class="stats-item"><span>Estado:</span> <strong [class]="partidaEnCurso ? 'status-active' : 'status-wait'">{{ partida.estado }}</strong></div>
+          </mat-card>
+        }
+      </div>
+
+      <div class="center-panel">
+        <mat-card class="dashboard-panel board-panel" style="position: relative">
+          <div class="turn-glow-top" [class.active]="partidaEnCurso && turnoActualTablero === 'b'"></div>
+          <div class="turn-glow-bottom" [class.active]="partidaEnCurso && turnoActualTablero === 'w'"></div>
+          <mat-card-content class="chess-wrapper" style="position: relative; z-index: 2;">
+            <div class="rank-labels">
+              <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+            </div>
+
+            <div class="chess-board">
+              @if(partidaEnCurso) {
+                <div class="global-elapsed-timer">
+                  <mat-icon>schedule</mat-icon>
+                  <span>{{ formatoGlobal(tiempoTotalSegundos) }}</span>
+                </div>
+              }
+              <div class="captured-pieces captured-top">
+                @for(p of capturedByBlack; track $index) {
+                  <span class="captured-piece piece-blanca">{{ getPieceUnicodeDirect(p, 'w') }}</span>
+                }
+              </div>
+              <div class="game-timer opponent-timer" [class.active-turn]="partidaEnCurso && turnoActualTablero === 'b'">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ partidaEnCurso ? formatoCountdown(colorAsignado === 'b' ? tiempoJugadorSegundos : tiempoRivalSegundos) : tiempoSeleccionado }}</span>
+              </div>
+
+              <div class="board-grid" (contextmenu)="prevenirMenuContextual($event)">
+                @for(square of boardSquares; track square.id) {
+                  <div class="square"
+                       [class.light]="square.light"
+                       [class.dark]="!square.light"
+                       [class.selected]="selectedSquare === square.id"
+                       [class.capture-target]="captureMoves.includes(square.id)"
+                       (click)="onSquareClick(square.id)"
+                       (mousedown)="iniciarFlecha($event, square.id)"
+                       (mouseup)="terminarFlecha($event, square.id)">
+                    @if(possibleMoves.includes(square.id)) {
+                      <div class="move-dot"></div>
+                    }
+                  </div>
+                }
+              </div>
+
+              @for(p of pieces; track p.id + '-' + gameSessionId) {
+                <div class="piece-wrapper"
+                     [style.left.%]="getColIndex(p.square) * 12.5"
+                     [style.top.%]="getRowIndex(p.square) * 12.5"
+                     [ngClass]="p.color === 'w' ? 'piece-blanca' : 'piece-negra'"
+                     (click)="onSquareClick(p.square); $event.stopPropagation()"
+                     (mousedown)="iniciarFlecha($event, p.square)"
+                     (mouseup)="terminarFlecha($event, p.square)"
+                     (contextmenu)="prevenirMenuContextual($event)">
+                  {{ getPieceUnicodeDirect(p.type, p.color) }}
+                </div>
+              }
+
+              <svg class="flechas-overlay" viewBox="0 0 100 100" (contextmenu)="prevenirMenuContextual($event)">
+                <defs>
+                  <marker id="puntaFlechaNaranja" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto">
+                    <polygon points="0 0, 4 2, 0 4" fill="rgba(255, 152, 0, 0.85)" />
+                  </marker>
+                </defs>
+                @for (flecha of flechasDibujadas; track flecha.id) {
+                  <path [attr.d]="flecha.pathData"
+                        stroke="rgba(255, 152, 0, 0.85)"
+                        stroke-width="1.8"
+                        fill="none"
+                        stroke-linejoin="round"
+                        marker-end="url(#puntaFlechaNaranja)" />
+                }
+              </svg>
+
+              <div class="captured-pieces captured-bottom">
+                @for(p of capturedByWhite; track $index) {
+                  <span class="captured-piece piece-negra">{{ getPieceUnicodeDirect(p, 'b') }}</span>
+                }
+              </div>
+              <div class="game-timer player-timer" [class.active-turn]="partidaEnCurso && turnoActualTablero === 'w'">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ partidaEnCurso ? formatoCountdown(colorAsignado === 'b' ? tiempoRivalSegundos : tiempoJugadorSegundos) : tiempoSeleccionado }}</span>
+              </div>
+            </div>
+
+            <div class="file-labels">
+              <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+            </div>
+          </mat-card-content>
+          <div class="favorite-emotes-container">
+            <div class="favorite-emotes-bar">
+              @for (i of [0, 1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+                @if (emotesFavoritos[i]) {
+                  <button class="fav-emote-btn filled" (click)="enviarEmote(emotesFavoritos[i].icon)" title="Atajo: {{ i + 1 }}">
+                    <span class="fav-emote-key">{{ i + 1 }}</span>
+                    <span class="fav-emote-icon">{{ emotesFavoritos[i].icon }}</span>
+                  </button>
+                } @else {
+                  <div class="fav-emote-btn empty" title="Espacio vacío">
+                    <span class="fav-emote-key">{{ i + 1 }}</span>
+                    <mat-icon style="font-size: 16px; color: #555; height: 16px; width: 16px;">add</mat-icon>
+                  </div>
+                }
+              }
+            </div>
+            <small class="fav-hint">Asigna favoritos desde el catálogo (★)</small>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="right-column">
+        <mat-card class="dashboard-panel history-panel">
+          <mat-card-header class="panel-header text-center" style="position: relative;">
+            <mat-card-title>Historial de Movimientos</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="history-content">
+            <div class="moves-list">
+              @for(move of moveHistoryPairs; track move.turn) {
+                <div class="move-row">
+                  <span class="turn-number">{{ move.turn }}.</span>
+
+                  <span class="move-white clickable-move"
+                        [class.reviewing-active]="isActiveMove(move.whiteIndex)"
+                        (click)="reviewMove(move.whiteIndex)">
+                    {{ move.white }}
+                  </span>
+
+                  @if (move.blackIndex !== null) {
+                    <span class="move-black clickable-move"
+                          [class.reviewing-active]="isActiveMove(move.blackIndex)"
+                          (click)="reviewMove(move.blackIndex)">
+                      {{ move.black }}
+                    </span>
+                  } @else {
+                    <span class="move-black"></span>
+                  }
+                </div>
+              }
+              @if(moveHistoryPairs.length === 0) {
+                <div class="no-moves">Sin movimientos aún...</div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-panel actions-panel">
+          <mat-card-header class="panel-header text-center">
+            <mat-card-title>Controles de Sala</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="actions-content">
+            <button mat-raised-button class="game-btn play-btn" [class.quit-btn]="partidaEnCurso" [disabled]="!rival || esperandoRival || soyEspectador" (click)="jugar()">
+              <mat-icon>{{ partidaEnCurso ? 'flag' : 'play_arrow' }}</mat-icon>
+              <div class="btn-text">
+                <span>{{ !rival ? 'Esperando rival...' : (esperandoRival ? 'En espera del otro jugador' : (partidaEnCurso ? 'Rendirse' : 'Estoy Listo')) }}</span>
+                <small>{{ partidaEnCurso ? 'Conceder la victoria' : 'Iniciar enfrentamiento' }}</small>
+              </div>
+            </button>
+            <button mat-raised-button class="game-btn time-btn" (click)="ajustarTiempo()" [disabled]="!rival || partidaEnCurso || soyEspectador">
+              <mat-icon>schedule</mat-icon>
+              <div class="btn-text">
+                <span>Proponer Tiempo</span>
+                <small>Límite por jugador</small>
+              </div>
+            </button>
+            @if(esSalaPrivada) {
+              <button mat-raised-button class="game-btn tune-btn"
+                      [disabled]="(!soyLider && yaSeVoto) || votacionActiva || partidaEnCurso || jugadoresEnSala.length <= 1"
+                      (click)="iniciarVotacion()">
+                <mat-icon>how_to_vote</mat-icon>
+                <div class="btn-text">
+                  <span>Votar Jugadores</span>
+                  <small>Elegir a los retadores</small>
+                </div>
+              </button>
+            }
+            <button mat-raised-button class="game-btn exit-btn" (click)="salir()" [disabled]="partidaEnCurso && !soyEspectador">
+              <mat-icon>logout</mat-icon>
+              <div class="btn-text">
+                <span>Abandonar Sala</span>
+                <small>Volver al menú</small>
+              </div>
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showVictoryModal) {
+  <div class="custom-modal-overlay">
+    <div class="custom-modal-content slider-modal text-center" style="max-width: 400px; text-align: center;">
+      <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 20px;">
+        <mat-icon style="font-size: 64px; height: 64px; width: 64px; color: #ffca28;">emoji_events</mat-icon>
+      </div>
+      <h2 style="font-size: 1.5rem; line-height: 1.3; color: #fff; margin-bottom: 10px;">{{ victoryReason }}</h2>
+      <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 15px;">Ganador: <strong style="color: #ffca28;">{{ victoryWinnerName }}</strong></p>
+
+      @if (!esSalaPrivada) {
+        @if (eloDeltaMessage) {
+          <h3 [style.color]="eloDeltaColor" style="font-size: 2rem; font-weight: bold; margin-bottom: 30px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+            {{ eloDeltaMessage }}
+          </h3>
+        } @else {
+          <h3 style="color: #888; font-size: 1.2rem; margin-bottom: 30px; font-style: italic;">Calculando ELO...</h3>
+        }
+      } @else {
+        <div style="margin-bottom: 30px;"></div>
+      }
+
+      @if (esSalaPrivada) {
+        <button mat-raised-button class="btn-volver" (click)="showVictoryModal = false">Cerrar</button>
+      } @else {
+        <button mat-raised-button class="btn-volver" (click)="showVictoryModal = false; salir()">Volver al Menú</button>
+      }
+    </div>
+  </div>
+}
+
+@if (showTiempos) {
+  <div class="custom-modal-overlay" (click)="showTiempos = false">
+    <div class="custom-modal-content slider-modal template-purple-theme" (click)="$event.stopPropagation()">
+      <div class="modal-header"><h2>Tiempo de Partida</h2><button mat-icon-button class="close-btn" (click)="showTiempos = false"><mat-icon>close</mat-icon></button></div>
+      <div class="rank-display"><div class="time-icon-wrapper"><mat-icon class="dynamic-time-icon">schedule</mat-icon></div><h3 class="dynamic-time-name">{{ tiemposDisponibles[selectedTimeIndex] }}</h3><div class="dynamic-elo-value">Límite por jugador</div></div>
+      <div class="slider-container"><input type="range" min="0" max="15" step="1" [(ngModel)]="selectedTimeIndex" class="time-slider"><div class="slider-labels"><span>15s</span><span>∞</span></div></div>
+      <button mat-raised-button class="confirm-time-btn" (click)="confirmarTiempo()">Proponer a Oponente</button>
+    </div>
+  </div>
+}
+@if (showTiempoPropuestoModal) {
+  <div class="custom-modal-overlay">
+    <div class="slider-modal" style="text-align: center; max-width: 400px;">
+      <h2 class="text-1">Nueva Propuesta</h2>
+      <p class="text-2">Tu oponente propone cambiar el tiempo a:</p>
+      <h3 style="color: #ffca28; font-size: 1.5rem;">{{ tiempoPropuesto }}</h3>
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button mat-raised-button class="btn-volver" (click)="responderPropuesta(true)">Aceptar</button>
+        <button mat-raised-button class="decline-match-btn" (click)="responderPropuesta(false)">Rechazar</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showInicioPropuestoModal) {
+  <div class="custom-modal-overlay">
+    <div class="slider-modal" style="text-align: center; max-width: 400px;">
+      <h2 class="text-1">El oponente está listo</h2>
+      <p class="text-2">El jugador {{ rival.nombreCompleto }} quiere iniciar la partida.</p>
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button mat-raised-button class="btn-volver" (click)="responderInicio(true)">Aceptar e Iniciar</button>
+        <button mat-raised-button class="decline-match-btn" (click)="responderInicio(false)">Aún no</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showRuletaModal) {
+  <div class="custom-modal-overlay">
+    <div class="slider-modal text-center" style="max-width: 450px; text-align: center; overflow: hidden;">
+      <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 5px;">Sorteo de Color</h2>
+      <p style="color: #aaa; margin-bottom: 20px;">{{ ruletaWinnerMessage }}</p>
+
+      <div class="ruleta-container">
+        <div class="ruleta-pointer"></div>
+
+        <div class="ruleta-wheel" [style.transform]="'rotate(' + ruletaRotation + 'deg)'">
+          <div class="ruleta-text text-blancas">BLANCAS</div>
+          <div class="ruleta-text text-negras">NEGRAS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (showVotingModal) {
+  <div class="custom-modal-overlay">
+    <div class="slider-modal text-center" style="max-width: 400px; padding: 1.5rem;">
+      <h2 style="color: white; margin-bottom: 5px;">Votación de Jugadores</h2>
+      <p style="color: #ffca28; font-weight: bold; margin-bottom: 15px;">
+        <mat-icon style="vertical-align: middle;">timer</mat-icon> {{ tiempoVotacion }}s restantes
+      </p>
+
+      <div class="voting-list">
+        @for(jug of jugadoresEnSala; track jug.id) {
+          <div class="vote-item" (click)="emitirVoto(jug.id)" [class.voted-item]="votoEmitido">
+            <div class="vote-name">{{ jug.nombreCompleto }}</div>
+            <div class="vote-count">
+              <mat-icon style="font-size: 16px; width: 16px; height: 16px; vertical-align: bottom;">how_to_vote</mat-icon>
+              {{ jug.votos }}
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+<div class="emote-system-wrapper">
+  <div class="emotes-feed">
+    @for (e of emotesActivos; track e.id) {
+      <div class="emote-bubble">
+        <span class="emote-name">{{ e.nombre }}:</span>
+        <span class="emote-icon">{{ e.emote }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="emote-controls">
+    <div class="emote-menu" [class.menu-abierto]="mostrarMenuEmotes">
+        <div class="emote-header">
+          <div class="emote-search-box">
+            <mat-icon>search</mat-icon>
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar emote...">
+          </div>
+        </div>
+
+        <div class="emote-grid">
+          @for (emote of emotesFiltrados; track emote.icon) {
+            <div class="emote-item-wrapper">
+              <button class="emote-btn" (click)="enviarEmote(emote.icon)" [title]="emote.name">{{ emote.icon }}</button>
+
+              <mat-icon class="fav-star" [class.is-fav]="esFavorito(emote)" (click)="toggleFavorito(emote, $event)">
+                {{ esFavorito(emote) ? 'star' : 'star_border' }}
+              </mat-icon>
+            </div>
+          }
+          @if (emotesFiltrados.length === 0) {
+            <p style="grid-column: 1 / -1; text-align: center; color: #888; font-size: 0.9rem;">No hay coincidencias.</p>
+          }
+        </div>
+      </div>
+    <button mat-fab class="emote-trigger-btn" (click)="toggleMenuEmotes()" title="Abrir Emotes">
+      <mat-icon>{{ mostrarMenuEmotes ? 'close' : 'mood' }}</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="chat-system-wrapper">
+  <div class="chat-window" [class.chat-abierto]="mostrarChat" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+    @if (isDraggingImage) {
+      <div class="chat-drag-overlay">
+        <mat-icon>cloud_upload</mat-icon>
+        <span>Suelta la imagen aquí</span>
+      </div>
+    }
+
+    <div class="chat-header">
+      <span>Chat de Sala</span>
+      <mat-icon class="close-chat-btn" (click)="toggleChat()">close</mat-icon>
+    </div>
+
+    @if (imagenPendiente) {
+      <div class="image-preview-workspace">
+        <div class="workspace-header">
+          <span>Preparar Imagen</span>
+          <span class="hint-text">(Arrastra el mouse para recortar)</span>
+        </div>
+
+        <div class="crop-area-container">
+          <div class="crop-image-wrapper" (mousedown)="startCrop($event)" (mousemove)="moveCrop($event)" (mouseup)="endCrop()" (mouseleave)="endCrop()">
+            <img #cropImageRef [src]="imagenPendiente" class="image-to-crop" draggable="false">
+            @if (cropBox) {
+              <div class="crop-overlay-box" [style.left.px]="cropBox.x" [style.top.px]="cropBox.y" [style.width.px]="cropBox.w" [style.height.px]="cropBox.h"></div>
+            }
+          </div>
+        </div>
+
+        <div class="workspace-actions">
+          <button class="custom-action-btn btn-discard" (click)="descartarImagen()" title="Descartar">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button class="custom-action-btn btn-crop" (click)="aplicarRecorte()" [disabled]="!cropBox || cropBox.w < 10">
+            <mat-icon>crop</mat-icon> <span>Recortar</span>
+          </button>
+          <button class="custom-action-btn btn-send" (click)="enviarImagenPendiente()">
+            <mat-icon>send</mat-icon> <span>Enviar</span>
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="chat-messages">
+        @for (msg of chatMessages; track msg.id) {
+          <div class="chat-message-row" [class.mine]="msg.esMio">
+            <div class="chat-bubble">
+              @if (msg.esMio) {
+                <mat-icon class="delete-msg-btn" (click)="borrarMensaje(msg.id)" title="Eliminar mensaje">delete_outline</mat-icon>
+              }
+              <div class="chat-sender">{{ msg.nombre }}</div>
+
+              @if (msg.imageData) {
+                <img [src]="msg.imageData" class="chat-image clickable-image" alt="Imagen" (click)="expandirImagen(msg.imageData)">
+              } @else if (msg.audioData) {
+                <audio controls [src]="msg.audioData" class="chat-audio-player"></audio>
+              } @else {
+                <div class="chat-text">{{ msg.texto }}</div>
+              }
+            </div>
+          </div>
+        }
+        @if (chatMessages.length === 0) {
+          <p class="no-messages-text">No hay mensajes aún. ¡Di hola!</p>
+        }
+      </div>
+
+      <div class="chat-input-area">
+        @if (!isRecording) {
+          <input type="text" [(ngModel)]="nuevoMensaje" (keyup.enter)="enviarMensajeChat()" placeholder="Escribe un mensaje...">
+        } @else {
+          <div class="recording-status"><div class="red-dot"></div> Grabando...</div>
+        }
+
+        @if (isRecording) {
+          <button mat-icon-button class="chat-action-btn cancel-btn" (click)="cancelRecording()"><mat-icon>delete</mat-icon></button>
+        }
+
+        <button mat-icon-button class="chat-action-btn" (click)="toggleRecording()" [class.recording-active]="isRecording">
+          <mat-icon>{{ isRecording ? 'send' : 'mic' }}</mat-icon>
+        </button>
+
+        @if (!isRecording) {
+          <button mat-icon-button class="chat-action-btn send-btn" (click)="enviarMensajeChat()" [disabled]="!nuevoMensaje.trim()"><mat-icon>send</mat-icon></button>
+        }
+      </div>
+    }
+  </div>
+  <button mat-fab class="chat-trigger-btn" (click)="toggleChat()" title="Chat">
+    <mat-icon>{{ mostrarChat ? 'close' : 'chat' }}</mat-icon>
+  </button>
+</div>
+@if (imagenExpandida) {
+  <div class="custom-modal-overlay" style="z-index: 2000;" (click)="cerrarImagenExpandida()">
+    <div class="expanded-image-wrapper" (click)="$event.stopPropagation()">
+      <button mat-icon-button class="close-expanded-btn" (click)="cerrarImagenExpandida()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <img [src]="imagenExpandida" class="expanded-image" alt="Imagen expandida">
+    </div>
+  </div>
+}
