@@ -14,7 +14,7 @@
 
 .board-background::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: -12.5vw;
   left: -12.5vw;
   display: block;
