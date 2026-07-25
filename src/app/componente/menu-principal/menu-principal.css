@@ -1,8 +1,8 @@
-.board-background {
+.board-background{
   position: relative;
   background-color: #030303;
   background-image: conic-gradient(#0a0a0a 90deg, transparent 90deg 180deg, #0a0a0a 180deg 270deg, transparent 270deg);
-  background-size: 25vmax 25vmax;
+  background-size: 25vw 25vw;
   background-attachment: fixed;
   width: 100%;
   min-height: 100vh;
@@ -15,74 +15,119 @@
 .board-background::before {
   content: "";
   position: absolute;
-  top: -12.5vmax;
-  left: -12.5vmax;
+  top: -12.5vw;
+  left: -12.5vw;
   display: block;
-  width: 12.5vmax;
-  height: 12.5vmax;
+  width: 12.5vw;
+  height: 12.5vw;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.25);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
-  animation: smooth-wave 6s infinite;
+  animation: smooth-wave 8s infinite;
 }
 
 @keyframes smooth-wave {
-  0.0% { opacity: 0; box-shadow: 12.5vmax 12.5vmax 0 0 currentColor; }
-  3.0% { opacity: 1; box-shadow: 12.5vmax 12.5vmax 0 0 currentColor; }
-  5.8% { opacity: 0; box-shadow: 12.5vmax 12.5vmax 0 0 currentColor; }
-  5.9% { opacity: 0; box-shadow: 25vmax 12.5vmax 0 0 currentColor, 12.5vmax 25vmax 0 0 currentColor; }
+  0.0% { opacity: 0; box-shadow: 12.5vw 12.5vw 0 0 currentColor; }
+  1.5% { opacity: 1; box-shadow: 12.5vw 12.5vw 0 0 currentColor; }
+  2.8% { opacity: 0; box-shadow: 12.5vw 12.5vw 0 0 currentColor; }
+  2.9% { opacity: 0; box-shadow: 25vw 12.5vw 0 0 currentColor, 12.5vw 25vw 0 0 currentColor; }
 
-  6.0% { opacity: 0; box-shadow: 25vmax 12.5vmax 0 0 currentColor, 12.5vmax 25vmax 0 0 currentColor; }
-  9.0% { opacity: 1; box-shadow: 25vmax 12.5vmax 0 0 currentColor, 12.5vmax 25vmax 0 0 currentColor; }
-  11.8% { opacity: 0; box-shadow: 25vmax 12.5vmax 0 0 currentColor, 12.5vmax 25vmax 0 0 currentColor; }
-  11.9% { opacity: 0; box-shadow: 37.5vmax 12.5vmax 0 0 currentColor, 25vmax 25vmax 0 0 currentColor, 12.5vmax 37.5vmax 0 0 currentColor; }
+  3.0% { opacity: 0; box-shadow: 25vw 12.5vw 0 0 currentColor, 12.5vw 25vw 0 0 currentColor; }
+  4.5% { opacity: 1; box-shadow: 25vw 12.5vw 0 0 currentColor, 12.5vw 25vw 0 0 currentColor; }
+  5.8% { opacity: 0; box-shadow: 25vw 12.5vw 0 0 currentColor, 12.5vw 25vw 0 0 currentColor; }
+  5.9% { opacity: 0; box-shadow: 37.5vw 12.5vw 0 0 currentColor, 25vw 25vw 0 0 currentColor, 12.5vw 37.5vw 0 0 currentColor; }
 
-  12.0% { opacity: 0; box-shadow: 37.5vmax 12.5vmax 0 0 currentColor, 25vmax 25vmax 0 0 currentColor, 12.5vmax 37.5vmax 0 0 currentColor; }
-  15.0% { opacity: 1; box-shadow: 37.5vmax 12.5vmax 0 0 currentColor, 25vmax 25vmax 0 0 currentColor, 12.5vmax 37.5vmax 0 0 currentColor; }
-  17.8% { opacity: 0; box-shadow: 37.5vmax 12.5vmax 0 0 currentColor, 25vmax 25vmax 0 0 currentColor, 12.5vmax 37.5vmax 0 0 currentColor; }
-  17.9% { opacity: 0; box-shadow: 50vmax 12.5vmax 0 0 currentColor, 37.5vmax 25vmax 0 0 currentColor, 25vmax 37.5vmax 0 0 currentColor, 12.5vmax 50vmax 0 0 currentColor; }
+  6.0% { opacity: 0; box-shadow: 37.5vw 12.5vw 0 0 currentColor, 25vw 25vw 0 0 currentColor, 12.5vw 37.5vw 0 0 currentColor; }
+  7.5% { opacity: 1; box-shadow: 37.5vw 12.5vw 0 0 currentColor, 25vw 25vw 0 0 currentColor, 12.5vw 37.5vw 0 0 currentColor; }
+  8.8% { opacity: 0; box-shadow: 37.5vw 12.5vw 0 0 currentColor, 25vw 25vw 0 0 currentColor, 12.5vw 37.5vw 0 0 currentColor; }
+  8.9% { opacity: 0; box-shadow: 50vw 12.5vw 0 0 currentColor, 37.5vw 25vw 0 0 currentColor, 25vw 37.5vw 0 0 currentColor, 12.5vw 50vw 0 0 currentColor; }
 
-  18.0% { opacity: 0; box-shadow: 50vmax 12.5vmax 0 0 currentColor, 37.5vmax 25vmax 0 0 currentColor, 25vmax 37.5vmax 0 0 currentColor, 12.5vmax 50vmax 0 0 currentColor; }
-  21.0% { opacity: 1; box-shadow: 50vmax 12.5vmax 0 0 currentColor, 37.5vmax 25vmax 0 0 currentColor, 25vmax 37.5vmax 0 0 currentColor, 12.5vmax 50vmax 0 0 currentColor; }
-  23.8% { opacity: 0; box-shadow: 50vmax 12.5vmax 0 0 currentColor, 37.5vmax 25vmax 0 0 currentColor, 25vmax 37.5vmax 0 0 currentColor, 12.5vmax 50vmax 0 0 currentColor; }
-  23.9% { opacity: 0; box-shadow: 62.5vmax 12.5vmax 0 0 currentColor, 50vmax 25vmax 0 0 currentColor, 37.5vmax 37.5vmax 0 0 currentColor, 25vmax 50vmax 0 0 currentColor, 12.5vmax 62.5vmax 0 0 currentColor; }
+  9.0% { opacity: 0; box-shadow: 50vw 12.5vw 0 0 currentColor, 37.5vw 25vw 0 0 currentColor, 25vw 37.5vw 0 0 currentColor, 12.5vw 50vw 0 0 currentColor; }
+  10.5% { opacity: 1; box-shadow: 50vw 12.5vw 0 0 currentColor, 37.5vw 25vw 0 0 currentColor, 25vw 37.5vw 0 0 currentColor, 12.5vw 50vw 0 0 currentColor; }
+  11.8% { opacity: 0; box-shadow: 50vw 12.5vw 0 0 currentColor, 37.5vw 25vw 0 0 currentColor, 25vw 37.5vw 0 0 currentColor, 12.5vw 50vw 0 0 currentColor; }
+  11.9% { opacity: 0; box-shadow: 62.5vw 12.5vw 0 0 currentColor, 50vw 25vw 0 0 currentColor, 37.5vw 37.5vw 0 0 currentColor, 25vw 50vw 0 0 currentColor, 12.5vw 62.5vw 0 0 currentColor; }
 
-  24.0% { opacity: 0; box-shadow: 62.5vmax 12.5vmax 0 0 currentColor, 50vmax 25vmax 0 0 currentColor, 37.5vmax 37.5vmax 0 0 currentColor, 25vmax 50vmax 0 0 currentColor, 12.5vmax 62.5vmax 0 0 currentColor; }
-  27.0% { opacity: 1; box-shadow: 62.5vmax 12.5vmax 0 0 currentColor, 50vmax 25vmax 0 0 currentColor, 37.5vmax 37.5vmax 0 0 currentColor, 25vmax 50vmax 0 0 currentColor, 12.5vmax 62.5vmax 0 0 currentColor; }
-  29.8% { opacity: 0; box-shadow: 62.5vmax 12.5vmax 0 0 currentColor, 50vmax 25vmax 0 0 currentColor, 37.5vmax 37.5vmax 0 0 currentColor, 25vmax 50vmax 0 0 currentColor, 12.5vmax 62.5vmax 0 0 currentColor; }
-  29.9% { opacity: 0; box-shadow: 75vmax 12.5vmax 0 0 currentColor, 62.5vmax 25vmax 0 0 currentColor, 50vmax 37.5vmax 0 0 currentColor, 37.5vmax 50vmax 0 0 currentColor, 25vmax 62.5vmax 0 0 currentColor, 12.5vmax 75vmax 0 0 currentColor; }
+  12.0% { opacity: 0; box-shadow: 62.5vw 12.5vw 0 0 currentColor, 50vw 25vw 0 0 currentColor, 37.5vw 37.5vw 0 0 currentColor, 25vw 50vw 0 0 currentColor, 12.5vw 62.5vw 0 0 currentColor; }
+  13.5% { opacity: 1; box-shadow: 62.5vw 12.5vw 0 0 currentColor, 50vw 25vw 0 0 currentColor, 37.5vw 37.5vw 0 0 currentColor, 25vw 50vw 0 0 currentColor, 12.5vw 62.5vw 0 0 currentColor; }
+  14.8% { opacity: 0; box-shadow: 62.5vw 12.5vw 0 0 currentColor, 50vw 25vw 0 0 currentColor, 37.5vw 37.5vw 0 0 currentColor, 25vw 50vw 0 0 currentColor, 12.5vw 62.5vw 0 0 currentColor; }
+  14.9% { opacity: 0; box-shadow: 75vw 12.5vw 0 0 currentColor, 62.5vw 25vw 0 0 currentColor, 50vw 37.5vw 0 0 currentColor, 37.5vw 50vw 0 0 currentColor, 25vw 62.5vw 0 0 currentColor, 12.5vw 75vw 0 0 currentColor; }
 
-  30.0% { opacity: 0; box-shadow: 75vmax 12.5vmax 0 0 currentColor, 62.5vmax 25vmax 0 0 currentColor, 50vmax 37.5vmax 0 0 currentColor, 37.5vmax 50vmax 0 0 currentColor, 25vmax 62.5vmax 0 0 currentColor, 12.5vmax 75vmax 0 0 currentColor; }
-  33.0% { opacity: 1; box-shadow: 75vmax 12.5vmax 0 0 currentColor, 62.5vmax 25vmax 0 0 currentColor, 50vmax 37.5vmax 0 0 currentColor, 37.5vmax 50vmax 0 0 currentColor, 25vmax 62.5vmax 0 0 currentColor, 12.5vmax 75vmax 0 0 currentColor; }
-  35.8% { opacity: 0; box-shadow: 75vmax 12.5vmax 0 0 currentColor, 62.5vmax 25vmax 0 0 currentColor, 50vmax 37.5vmax 0 0 currentColor, 37.5vmax 50vmax 0 0 currentColor, 25vmax 62.5vmax 0 0 currentColor, 12.5vmax 75vmax 0 0 currentColor; }
-  35.9% { opacity: 0; box-shadow: 87.5vmax 12.5vmax 0 0 currentColor, 75vmax 25vmax 0 0 currentColor, 62.5vmax 37.5vmax 0 0 currentColor, 50vmax 50vmax 0 0 currentColor, 37.5vmax 62.5vmax 0 0 currentColor, 25vmax 75vmax 0 0 currentColor, 12.5vmax 87.5vmax 0 0 currentColor; }
+  15.0% { opacity: 0; box-shadow: 75vw 12.5vw 0 0 currentColor, 62.5vw 25vw 0 0 currentColor, 50vw 37.5vw 0 0 currentColor, 37.5vw 50vw 0 0 currentColor, 25vw 62.5vw 0 0 currentColor, 12.5vw 75vw 0 0 currentColor; }
+  16.5% { opacity: 1; box-shadow: 75vw 12.5vw 0 0 currentColor, 62.5vw 25vw 0 0 currentColor, 50vw 37.5vw 0 0 currentColor, 37.5vw 50vw 0 0 currentColor, 25vw 62.5vw 0 0 currentColor, 12.5vw 75vw 0 0 currentColor; }
+  17.8% { opacity: 0; box-shadow: 75vw 12.5vw 0 0 currentColor, 62.5vw 25vw 0 0 currentColor, 50vw 37.5vw 0 0 currentColor, 37.5vw 50vw 0 0 currentColor, 25vw 62.5vw 0 0 currentColor, 12.5vw 75vw 0 0 currentColor; }
+  17.9% { opacity: 0; box-shadow: 87.5vw 12.5vw 0 0 currentColor, 75vw 25vw 0 0 currentColor, 62.5vw 37.5vw 0 0 currentColor, 50vw 50vw 0 0 currentColor, 37.5vw 62.5vw 0 0 currentColor, 25vw 75vw 0 0 currentColor, 12.5vw 87.5vw 0 0 currentColor; }
 
-  36.0% { opacity: 0; box-shadow: 87.5vmax 12.5vmax 0 0 currentColor, 75vmax 25vmax 0 0 currentColor, 62.5vmax 37.5vmax 0 0 currentColor, 50vmax 50vmax 0 0 currentColor, 37.5vmax 62.5vmax 0 0 currentColor, 25vmax 75vmax 0 0 currentColor, 12.5vmax 87.5vmax 0 0 currentColor; }
-  39.0% { opacity: 1; box-shadow: 87.5vmax 12.5vmax 0 0 currentColor, 75vmax 25vmax 0 0 currentColor, 62.5vmax 37.5vmax 0 0 currentColor, 50vmax 50vmax 0 0 currentColor, 37.5vmax 62.5vmax 0 0 currentColor, 25vmax 75vmax 0 0 currentColor, 12.5vmax 87.5vmax 0 0 currentColor; }
-  41.8% { opacity: 0; box-shadow: 87.5vmax 12.5vmax 0 0 currentColor, 75vmax 25vmax 0 0 currentColor, 62.5vmax 37.5vmax 0 0 currentColor, 50vmax 50vmax 0 0 currentColor, 37.5vmax 62.5vmax 0 0 currentColor, 25vmax 75vmax 0 0 currentColor, 12.5vmax 87.5vmax 0 0 currentColor; }
-  41.9% { opacity: 0; box-shadow: 100vmax 12.5vmax 0 0 currentColor, 87.5vmax 25vmax 0 0 currentColor, 75vmax 37.5vmax 0 0 currentColor, 62.5vmax 50vmax 0 0 currentColor, 50vmax 62.5vmax 0 0 currentColor, 37.5vmax 75vmax 0 0 currentColor, 25vmax 87.5vmax 0 0 currentColor, 12.5vmax 100vmax 0 0 currentColor; }
+  18.0% { opacity: 0; box-shadow: 87.5vw 12.5vw 0 0 currentColor, 75vw 25vw 0 0 currentColor, 62.5vw 37.5vw 0 0 currentColor, 50vw 50vw 0 0 currentColor, 37.5vw 62.5vw 0 0 currentColor, 25vw 75vw 0 0 currentColor, 12.5vw 87.5vw 0 0 currentColor; }
+  19.5% { opacity: 1; box-shadow: 87.5vw 12.5vw 0 0 currentColor, 75vw 25vw 0 0 currentColor, 62.5vw 37.5vw 0 0 currentColor, 50vw 50vw 0 0 currentColor, 37.5vw 62.5vw 0 0 currentColor, 25vw 75vw 0 0 currentColor, 12.5vw 87.5vw 0 0 currentColor; }
+  20.8% { opacity: 0; box-shadow: 87.5vw 12.5vw 0 0 currentColor, 75vw 25vw 0 0 currentColor, 62.5vw 37.5vw 0 0 currentColor, 50vw 50vw 0 0 currentColor, 37.5vw 62.5vw 0 0 currentColor, 25vw 75vw 0 0 currentColor, 12.5vw 87.5vw 0 0 currentColor; }
+  20.9% { opacity: 0; box-shadow: 100vw 12.5vw 0 0 currentColor, 87.5vw 25vw 0 0 currentColor, 75vw 37.5vw 0 0 currentColor, 62.5vw 50vw 0 0 currentColor, 50vw 62.5vw 0 0 currentColor, 37.5vw 75vw 0 0 currentColor, 25vw 87.5vw 0 0 currentColor, 12.5vw 100vw 0 0 currentColor; }
 
-  42.0% { opacity: 0; box-shadow: 100vmax 12.5vmax 0 0 currentColor, 87.5vmax 25vmax 0 0 currentColor, 75vmax 37.5vmax 0 0 currentColor, 62.5vmax 50vmax 0 0 currentColor, 50vmax 62.5vmax 0 0 currentColor, 37.5vmax 75vmax 0 0 currentColor, 25vmax 87.5vmax 0 0 currentColor, 12.5vmax 100vmax 0 0 currentColor; }
-  45.0% { opacity: 1; box-shadow: 100vmax 12.5vmax 0 0 currentColor, 87.5vmax 25vmax 0 0 currentColor, 75vmax 37.5vmax 0 0 currentColor, 62.5vmax 50vmax 0 0 currentColor, 50vmax 62.5vmax 0 0 currentColor, 37.5vmax 75vmax 0 0 currentColor, 25vmax 87.5vmax 0 0 currentColor, 12.5vmax 100vmax 0 0 currentColor; }
-  47.8% { opacity: 0; box-shadow: 100vmax 12.5vmax 0 0 currentColor, 87.5vmax 25vmax 0 0 currentColor, 75vmax 37.5vmax 0 0 currentColor, 62.5vmax 50vmax 0 0 currentColor, 50vmax 62.5vmax 0 0 currentColor, 37.5vmax 75vmax 0 0 currentColor, 25vmax 87.5vmax 0 0 currentColor, 12.5vmax 100vmax 0 0 currentColor; }
-  47.9% { opacity: 0; box-shadow: 112.5vmax 12.5vmax 0 0 currentColor, 100vmax 25vmax 0 0 currentColor, 87.5vmax 37.5vmax 0 0 currentColor, 75vmax 50vmax 0 0 currentColor, 62.5vmax 62.5vmax 0 0 currentColor, 50vmax 75vmax 0 0 currentColor, 37.5vmax 87.5vmax 0 0 currentColor, 25vmax 100vmax 0 0 currentColor, 12.5vmax 112.5vmax 0 0 currentColor; }
+  21.0% { opacity: 0; box-shadow: 100vw 12.5vw 0 0 currentColor, 87.5vw 25vw 0 0 currentColor, 75vw 37.5vw 0 0 currentColor, 62.5vw 50vw 0 0 currentColor, 50vw 62.5vw 0 0 currentColor, 37.5vw 75vw 0 0 currentColor, 25vw 87.5vw 0 0 currentColor, 12.5vw 100vw 0 0 currentColor; }
+  22.5% { opacity: 1; box-shadow: 100vw 12.5vw 0 0 currentColor, 87.5vw 25vw 0 0 currentColor, 75vw 37.5vw 0 0 currentColor, 62.5vw 50vw 0 0 currentColor, 50vw 62.5vw 0 0 currentColor, 37.5vw 75vw 0 0 currentColor, 25vw 87.5vw 0 0 currentColor, 12.5vw 100vw 0 0 currentColor; }
+  23.8% { opacity: 0; box-shadow: 100vw 12.5vw 0 0 currentColor, 87.5vw 25vw 0 0 currentColor, 75vw 37.5vw 0 0 currentColor, 62.5vw 50vw 0 0 currentColor, 50vw 62.5vw 0 0 currentColor, 37.5vw 75vw 0 0 currentColor, 25vw 87.5vw 0 0 currentColor, 12.5vw 100vw 0 0 currentColor; }
+  23.9% { opacity: 0; box-shadow: 100vw 25vw 0 0 currentColor, 87.5vw 37.5vw 0 0 currentColor, 75vw 50vw 0 0 currentColor, 62.5vw 62.5vw 0 0 currentColor, 50vw 75vw 0 0 currentColor, 37.5vw 87.5vw 0 0 currentColor, 25vw 100vw 0 0 currentColor, 12.5vw 112.5vw 0 0 currentColor; }
 
-  48.0% { opacity: 0; box-shadow: 112.5vmax 12.5vmax 0 0 currentColor, 100vmax 25vmax 0 0 currentColor, 87.5vmax 37.5vmax 0 0 currentColor, 75vmax 50vmax 0 0 currentColor, 62.5vmax 62.5vmax 0 0 currentColor, 50vmax 75vmax 0 0 currentColor, 37.5vmax 87.5vmax 0 0 currentColor, 25vmax 100vmax 0 0 currentColor, 12.5vmax 112.5vmax 0 0 currentColor; }
-  51.0% { opacity: 1; box-shadow: 112.5vmax 12.5vmax 0 0 currentColor, 100vmax 25vmax 0 0 currentColor, 87.5vmax 37.5vmax 0 0 currentColor, 75vmax 50vmax 0 0 currentColor, 62.5vmax 62.5vmax 0 0 currentColor, 50vmax 75vmax 0 0 currentColor, 37.5vmax 87.5vmax 0 0 currentColor, 25vmax 100vmax 0 0 currentColor, 12.5vmax 112.5vmax 0 0 currentColor; }
-  53.8% { opacity: 0; box-shadow: 112.5vmax 12.5vmax 0 0 currentColor, 100vmax 25vmax 0 0 currentColor, 87.5vmax 37.5vmax 0 0 currentColor, 75vmax 50vmax 0 0 currentColor, 62.5vmax 62.5vmax 0 0 currentColor, 50vmax 75vmax 0 0 currentColor, 37.5vmax 87.5vmax 0 0 currentColor, 25vmax 100vmax 0 0 currentColor, 12.5vmax 112.5vmax 0 0 currentColor; }
-  53.9% { opacity: 0; box-shadow: 112.5vmax 25vmax 0 0 currentColor, 100vmax 37.5vmax 0 0 currentColor, 87.5vmax 50vmax 0 0 currentColor, 75vmax 62.5vmax 0 0 currentColor, 62.5vmax 75vmax 0 0 currentColor, 50vmax 87.5vmax 0 0 currentColor, 37.5vmax 100vmax 0 0 currentColor, 25vmax 112.5vmax 0 0 currentColor, 12.5vmax 125vmax 0 0 currentColor; }
+  24.0% { opacity: 0; box-shadow: 100vw 25vw 0 0 currentColor, 87.5vw 37.5vw 0 0 currentColor, 75vw 50vw 0 0 currentColor, 62.5vw 62.5vw 0 0 currentColor, 50vw 75vw 0 0 currentColor, 37.5vw 87.5vw 0 0 currentColor, 25vw 100vw 0 0 currentColor, 12.5vw 112.5vw 0 0 currentColor; }
+  25.5% { opacity: 1; box-shadow: 100vw 25vw 0 0 currentColor, 87.5vw 37.5vw 0 0 currentColor, 75vw 50vw 0 0 currentColor, 62.5vw 62.5vw 0 0 currentColor, 50vw 75vw 0 0 currentColor, 37.5vw 87.5vw 0 0 currentColor, 25vw 100vw 0 0 currentColor, 12.5vw 112.5vw 0 0 currentColor; }
+  26.8% { opacity: 0; box-shadow: 100vw 25vw 0 0 currentColor, 87.5vw 37.5vw 0 0 currentColor, 75vw 50vw 0 0 currentColor, 62.5vw 62.5vw 0 0 currentColor, 50vw 75vw 0 0 currentColor, 37.5vw 87.5vw 0 0 currentColor, 25vw 100vw 0 0 currentColor, 12.5vw 112.5vw 0 0 currentColor; }
+  26.9% { opacity: 0; box-shadow: 100vw 37.5vw 0 0 currentColor, 87.5vw 50vw 0 0 currentColor, 75vw 62.5vw 0 0 currentColor, 62.5vw 75vw 0 0 currentColor, 50vw 87.5vw 0 0 currentColor, 37.5vw 100vw 0 0 currentColor, 25vw 112.5vw 0 0 currentColor, 12.5vw 125vw 0 0 currentColor; }
 
-  54.0% { opacity: 0; box-shadow: 112.5vmax 25vmax 0 0 currentColor, 100vmax 37.5vmax 0 0 currentColor, 87.5vmax 50vmax 0 0 currentColor, 75vmax 62.5vmax 0 0 currentColor, 62.5vmax 75vmax 0 0 currentColor, 50vmax 87.5vmax 0 0 currentColor, 37.5vmax 100vmax 0 0 currentColor, 25vmax 112.5vmax 0 0 currentColor, 12.5vmax 125vmax 0 0 currentColor; }
-  57.0% { opacity: 1; box-shadow: 112.5vmax 25vmax 0 0 currentColor, 100vmax 37.5vmax 0 0 currentColor, 87.5vmax 50vmax 0 0 currentColor, 75vmax 62.5vmax 0 0 currentColor, 62.5vmax 75vmax 0 0 currentColor, 50vmax 87.5vmax 0 0 currentColor, 37.5vmax 100vmax 0 0 currentColor, 25vmax 112.5vmax 0 0 currentColor, 12.5vmax 125vmax 0 0 currentColor; }
-  59.8% { opacity: 0; box-shadow: 112.5vmax 25vmax 0 0 currentColor, 100vmax 37.5vmax 0 0 currentColor, 87.5vmax 50vmax 0 0 currentColor, 75vmax 62.5vmax 0 0 currentColor, 62.5vmax 75vmax 0 0 currentColor, 50vmax 87.5vmax 0 0 currentColor, 37.5vmax 100vmax 0 0 currentColor, 25vmax 112.5vmax 0 0 currentColor, 12.5vmax 125vmax 0 0 currentColor; }
-  59.9% { opacity: 0; box-shadow: 112.5vmax 37.5vmax 0 0 currentColor, 100vmax 50vmax 0 0 currentColor, 87.5vmax 62.5vmax 0 0 currentColor, 75vmax 75vmax 0 0 currentColor, 62.5vmax 87.5vmax 0 0 currentColor, 50vmax 100vmax 0 0 currentColor, 37.5vmax 112.5vmax 0 0 currentColor, 25vmax 125vmax 0 0 currentColor, 12.5vmax 137.5vmax 0 0 currentColor; }
+  27.0% { opacity: 0; box-shadow: 100vw 37.5vw 0 0 currentColor, 87.5vw 50vw 0 0 currentColor, 75vw 62.5vw 0 0 currentColor, 62.5vw 75vw 0 0 currentColor, 50vw 87.5vw 0 0 currentColor, 37.5vw 100vw 0 0 currentColor, 25vw 112.5vw 0 0 currentColor, 12.5vw 125vw 0 0 currentColor; }
+  28.5% { opacity: 1; box-shadow: 100vw 37.5vw 0 0 currentColor, 87.5vw 50vw 0 0 currentColor, 75vw 62.5vw 0 0 currentColor, 62.5vw 75vw 0 0 currentColor, 50vw 87.5vw 0 0 currentColor, 37.5vw 100vw 0 0 currentColor, 25vw 112.5vw 0 0 currentColor, 12.5vw 125vw 0 0 currentColor; }
+  29.8% { opacity: 0; box-shadow: 100vw 37.5vw 0 0 currentColor, 87.5vw 50vw 0 0 currentColor, 75vw 62.5vw 0 0 currentColor, 62.5vw 75vw 0 0 currentColor, 50vw 87.5vw 0 0 currentColor, 37.5vw 100vw 0 0 currentColor, 25vw 112.5vw 0 0 currentColor, 12.5vw 125vw 0 0 currentColor; }
+  29.9% { opacity: 0; box-shadow: 100vw 50vw 0 0 currentColor, 87.5vw 62.5vw 0 0 currentColor, 75vw 75vw 0 0 currentColor, 62.5vw 87.5vw 0 0 currentColor, 50vw 100vw 0 0 currentColor, 37.5vw 112.5vw 0 0 currentColor, 25vw 125vw 0 0 currentColor, 12.5vw 137.5vw 0 0 currentColor; }
 
-  60.0% { opacity: 0; box-shadow: 112.5vmax 37.5vmax 0 0 currentColor, 100vmax 50vmax 0 0 currentColor, 87.5vmax 62.5vmax 0 0 currentColor, 75vmax 75vmax 0 0 currentColor, 62.5vmax 87.5vmax 0 0 currentColor, 50vmax 100vmax 0 0 currentColor, 37.5vmax 112.5vmax 0 0 currentColor, 25vmax 125vmax 0 0 currentColor, 12.5vmax 137.5vmax 0 0 currentColor; }
-  63.0% { opacity: 1; box-shadow: 112.5vmax 37.5vmax 0 0 currentColor, 100vmax 50vmax 0 0 currentColor, 87.5vmax 62.5vmax 0 0 currentColor, 75vmax 75vmax 0 0 currentColor, 62.5vmax 87.5vmax 0 0 currentColor, 50vmax 100vmax 0 0 currentColor, 37.5vmax 112.5vmax 0 0 currentColor, 25vmax 125vmax 0 0 currentColor, 12.5vmax 137.5vmax 0 0 currentColor; }
-  65.8% { opacity: 0; box-shadow: 112.5vmax 37.5vmax 0 0 currentColor, 100vmax 50vmax 0 0 currentColor, 87.5vmax 62.5vmax 0 0 currentColor, 75vmax 75vmax 0 0 currentColor, 62.5vmax 87.5vmax 0 0 currentColor, 50vmax 100vmax 0 0 currentColor, 37.5vmax 112.5vmax 0 0 currentColor, 25vmax 125vmax 0 0 currentColor, 12.5vmax 137.5vmax 0 0 currentColor; }
-  65.9% { opacity: 0; box-shadow: 112.5vmax 50vmax 0 0 currentColor, 100vmax 62.5vmax 0 0 currentColor, 87.5vmax 75vmax 0 0 currentColor, 75vmax 87.5vmax 0 0 currentColor, 62.5vmax 100vmax 0 0 currentColor, 50vmax 112.5vmax 0 0 currentColor, 37.5vmax 125vmax 0 0 currentColor, 25vmax 137.5vmax 0 0 currentColor, 12.5vmax 150vmax 0 0 currentColor; }
+  30.0% { opacity: 0; box-shadow: 100vw 50vw 0 0 currentColor, 87.5vw 62.5vw 0 0 currentColor, 75vw 75vw 0 0 currentColor, 62.5vw 87.5vw 0 0 currentColor, 50vw 100vw 0 0 currentColor, 37.5vw 112.5vw 0 0 currentColor, 25vw 125vw 0 0 currentColor, 12.5vw 137.5vw 0 0 currentColor; }
+  31.5% { opacity: 1; box-shadow: 100vw 50vw 0 0 currentColor, 87.5vw 62.5vw 0 0 currentColor, 75vw 75vw 0 0 currentColor, 62.5vw 87.5vw 0 0 currentColor, 50vw 100vw 0 0 currentColor, 37.5vw 112.5vw 0 0 currentColor, 25vw 125vw 0 0 currentColor, 12.5vw 137.5vw 0 0 currentColor; }
+  32.8% { opacity: 0; box-shadow: 100vw 50vw 0 0 currentColor, 87.5vw 62.5vw 0 0 currentColor, 75vw 75vw 0 0 currentColor, 62.5vw 87.5vw 0 0 currentColor, 50vw 100vw 0 0 currentColor, 37.5vw 112.5vw 0 0 currentColor, 25vw 125vw 0 0 currentColor, 12.5vw 137.5vw 0 0 currentColor; }
+  32.9% { opacity: 0; box-shadow: 100vw 62.5vw 0 0 currentColor, 87.5vw 75vw 0 0 currentColor, 75vw 87.5vw 0 0 currentColor, 62.5vw 100vw 0 0 currentColor, 50vw 112.5vw 0 0 currentColor, 37.5vw 125vw 0 0 currentColor, 25vw 137.5vw 0 0 currentColor, 12.5vw 150vw 0 0 currentColor; }
+
+  33.0% { opacity: 0; box-shadow: 100vw 62.5vw 0 0 currentColor, 87.5vw 75vw 0 0 currentColor, 75vw 87.5vw 0 0 currentColor, 62.5vw 100vw 0 0 currentColor, 50vw 112.5vw 0 0 currentColor, 37.5vw 125vw 0 0 currentColor, 25vw 137.5vw 0 0 currentColor, 12.5vw 150vw 0 0 currentColor; }
+  34.5% { opacity: 1; box-shadow: 100vw 62.5vw 0 0 currentColor, 87.5vw 75vw 0 0 currentColor, 75vw 87.5vw 0 0 currentColor, 62.5vw 100vw 0 0 currentColor, 50vw 112.5vw 0 0 currentColor, 37.5vw 125vw 0 0 currentColor, 25vw 137.5vw 0 0 currentColor, 12.5vw 150vw 0 0 currentColor; }
+  35.8% { opacity: 0; box-shadow: 100vw 62.5vw 0 0 currentColor, 87.5vw 75vw 0 0 currentColor, 75vw 87.5vw 0 0 currentColor, 62.5vw 100vw 0 0 currentColor, 50vw 112.5vw 0 0 currentColor, 37.5vw 125vw 0 0 currentColor, 25vw 137.5vw 0 0 currentColor, 12.5vw 150vw 0 0 currentColor; }
+  35.9% { opacity: 0; box-shadow: 100vw 75vw 0 0 currentColor, 87.5vw 87.5vw 0 0 currentColor, 75vw 100vw 0 0 currentColor, 62.5vw 112.5vw 0 0 currentColor, 50vw 125vw 0 0 currentColor, 37.5vw 137.5vw 0 0 currentColor, 25vw 150vw 0 0 currentColor, 12.5vw 162.5vw 0 0 currentColor; }
+
+  36.0% { opacity: 0; box-shadow: 100vw 75vw 0 0 currentColor, 87.5vw 87.5vw 0 0 currentColor, 75vw 100vw 0 0 currentColor, 62.5vw 112.5vw 0 0 currentColor, 50vw 125vw 0 0 currentColor, 37.5vw 137.5vw 0 0 currentColor, 25vw 150vw 0 0 currentColor, 12.5vw 162.5vw 0 0 currentColor; }
+  37.5% { opacity: 1; box-shadow: 100vw 75vw 0 0 currentColor, 87.5vw 87.5vw 0 0 currentColor, 75vw 100vw 0 0 currentColor, 62.5vw 112.5vw 0 0 currentColor, 50vw 125vw 0 0 currentColor, 37.5vw 137.5vw 0 0 currentColor, 25vw 150vw 0 0 currentColor, 12.5vw 162.5vw 0 0 currentColor; }
+  38.8% { opacity: 0; box-shadow: 100vw 75vw 0 0 currentColor, 87.5vw 87.5vw 0 0 currentColor, 75vw 100vw 0 0 currentColor, 62.5vw 112.5vw 0 0 currentColor, 50vw 125vw 0 0 currentColor, 37.5vw 137.5vw 0 0 currentColor, 25vw 150vw 0 0 currentColor, 12.5vw 162.5vw 0 0 currentColor; }
+  38.9% { opacity: 0; box-shadow: 100vw 87.5vw 0 0 currentColor, 87.5vw 100vw 0 0 currentColor, 75vw 112.5vw 0 0 currentColor, 62.5vw 125vw 0 0 currentColor, 50vw 137.5vw 0 0 currentColor, 37.5vw 150vw 0 0 currentColor, 25vw 162.5vw 0 0 currentColor, 12.5vw 175vw 0 0 currentColor; }
+
+  39.0% { opacity: 0; box-shadow: 100vw 87.5vw 0 0 currentColor, 87.5vw 100vw 0 0 currentColor, 75vw 112.5vw 0 0 currentColor, 62.5vw 125vw 0 0 currentColor, 50vw 137.5vw 0 0 currentColor, 37.5vw 150vw 0 0 currentColor, 25vw 162.5vw 0 0 currentColor, 12.5vw 175vw 0 0 currentColor; }
+  40.5% { opacity: 1; box-shadow: 100vw 87.5vw 0 0 currentColor, 87.5vw 100vw 0 0 currentColor, 75vw 112.5vw 0 0 currentColor, 62.5vw 125vw 0 0 currentColor, 50vw 137.5vw 0 0 currentColor, 37.5vw 150vw 0 0 currentColor, 25vw 162.5vw 0 0 currentColor, 12.5vw 175vw 0 0 currentColor; }
+  41.8% { opacity: 0; box-shadow: 100vw 87.5vw 0 0 currentColor, 87.5vw 100vw 0 0 currentColor, 75vw 112.5vw 0 0 currentColor, 62.5vw 125vw 0 0 currentColor, 50vw 137.5vw 0 0 currentColor, 37.5vw 150vw 0 0 currentColor, 25vw 162.5vw 0 0 currentColor, 12.5vw 175vw 0 0 currentColor; }
+  41.9% { opacity: 0; box-shadow: 100vw 100vw 0 0 currentColor, 87.5vw 112.5vw 0 0 currentColor, 75vw 125vw 0 0 currentColor, 62.5vw 137.5vw 0 0 currentColor, 50vw 150vw 0 0 currentColor, 37.5vw 162.5vw 0 0 currentColor, 25vw 175vw 0 0 currentColor, 12.5vw 187.5vw 0 0 currentColor; }
+
+  42.0% { opacity: 0; box-shadow: 100vw 100vw 0 0 currentColor, 87.5vw 112.5vw 0 0 currentColor, 75vw 125vw 0 0 currentColor, 62.5vw 137.5vw 0 0 currentColor, 50vw 150vw 0 0 currentColor, 37.5vw 162.5vw 0 0 currentColor, 25vw 175vw 0 0 currentColor, 12.5vw 187.5vw 0 0 currentColor; }
+  43.5% { opacity: 1; box-shadow: 100vw 100vw 0 0 currentColor, 87.5vw 112.5vw 0 0 currentColor, 75vw 125vw 0 0 currentColor, 62.5vw 137.5vw 0 0 currentColor, 50vw 150vw 0 0 currentColor, 37.5vw 162.5vw 0 0 currentColor, 25vw 175vw 0 0 currentColor, 12.5vw 187.5vw 0 0 currentColor; }
+  44.8% { opacity: 0; box-shadow: 100vw 100vw 0 0 currentColor, 87.5vw 112.5vw 0 0 currentColor, 75vw 125vw 0 0 currentColor, 62.5vw 137.5vw 0 0 currentColor, 50vw 150vw 0 0 currentColor, 37.5vw 162.5vw 0 0 currentColor, 25vw 175vw 0 0 currentColor, 12.5vw 187.5vw 0 0 currentColor; }
+  44.9% { opacity: 0; box-shadow: 100vw 112.5vw 0 0 currentColor, 87.5vw 125vw 0 0 currentColor, 75vw 137.5vw 0 0 currentColor, 62.5vw 150vw 0 0 currentColor, 50vw 162.5vw 0 0 currentColor, 37.5vw 175vw 0 0 currentColor, 25vw 187.5vw 0 0 currentColor, 12.5vw 200vw 0 0 currentColor; }
+
+  45.0% { opacity: 0; box-shadow: 100vw 112.5vw 0 0 currentColor, 87.5vw 125vw 0 0 currentColor, 75vw 137.5vw 0 0 currentColor, 62.5vw 150vw 0 0 currentColor, 50vw 162.5vw 0 0 currentColor, 37.5vw 175vw 0 0 currentColor, 25vw 187.5vw 0 0 currentColor, 12.5vw 200vw 0 0 currentColor; }
+  46.5% { opacity: 1; box-shadow: 100vw 112.5vw 0 0 currentColor, 87.5vw 125vw 0 0 currentColor, 75vw 137.5vw 0 0 currentColor, 62.5vw 150vw 0 0 currentColor, 50vw 162.5vw 0 0 currentColor, 37.5vw 175vw 0 0 currentColor, 25vw 187.5vw 0 0 currentColor, 12.5vw 200vw 0 0 currentColor; }
+  47.8% { opacity: 0; box-shadow: 100vw 112.5vw 0 0 currentColor, 87.5vw 125vw 0 0 currentColor, 75vw 137.5vw 0 0 currentColor, 62.5vw 150vw 0 0 currentColor, 50vw 162.5vw 0 0 currentColor, 37.5vw 175vw 0 0 currentColor, 25vw 187.5vw 0 0 currentColor, 12.5vw 200vw 0 0 currentColor; }
+  47.9% { opacity: 0; box-shadow: 100vw 125vw 0 0 currentColor, 87.5vw 137.5vw 0 0 currentColor, 75vw 150vw 0 0 currentColor, 62.5vw 162.5vw 0 0 currentColor, 50vw 175vw 0 0 currentColor, 37.5vw 187.5vw 0 0 currentColor, 25vw 200vw 0 0 currentColor, 12.5vw 212.5vw 0 0 currentColor; }
+
+  48.0% { opacity: 0; box-shadow: 100vw 125vw 0 0 currentColor, 87.5vw 137.5vw 0 0 currentColor, 75vw 150vw 0 0 currentColor, 62.5vw 162.5vw 0 0 currentColor, 50vw 175vw 0 0 currentColor, 37.5vw 187.5vw 0 0 currentColor, 25vw 200vw 0 0 currentColor, 12.5vw 212.5vw 0 0 currentColor; }
+  49.5% { opacity: 1; box-shadow: 100vw 125vw 0 0 currentColor, 87.5vw 137.5vw 0 0 currentColor, 75vw 150vw 0 0 currentColor, 62.5vw 162.5vw 0 0 currentColor, 50vw 175vw 0 0 currentColor, 37.5vw 187.5vw 0 0 currentColor, 25vw 200vw 0 0 currentColor, 12.5vw 212.5vw 0 0 currentColor; }
+  50.8% { opacity: 0; box-shadow: 100vw 125vw 0 0 currentColor, 87.5vw 137.5vw 0 0 currentColor, 75vw 150vw 0 0 currentColor, 62.5vw 162.5vw 0 0 currentColor, 50vw 175vw 0 0 currentColor, 37.5vw 187.5vw 0 0 currentColor, 25vw 200vw 0 0 currentColor, 12.5vw 212.5vw 0 0 currentColor; }
+  50.9% { opacity: 0; box-shadow: 100vw 137.5vw 0 0 currentColor, 87.5vw 150vw 0 0 currentColor, 75vw 162.5vw 0 0 currentColor, 62.5vw 175vw 0 0 currentColor, 50vw 187.5vw 0 0 currentColor, 37.5vw 200vw 0 0 currentColor, 25vw 212.5vw 0 0 currentColor, 12.5vw 225vw 0 0 currentColor; }
+
+  51.0% { opacity: 0; box-shadow: 100vw 137.5vw 0 0 currentColor, 87.5vw 150vw 0 0 currentColor, 75vw 162.5vw 0 0 currentColor, 62.5vw 175vw 0 0 currentColor, 50vw 187.5vw 0 0 currentColor, 37.5vw 200vw 0 0 currentColor, 25vw 212.5vw 0 0 currentColor, 12.5vw 225vw 0 0 currentColor; }
+  52.5% { opacity: 1; box-shadow: 100vw 137.5vw 0 0 currentColor, 87.5vw 150vw 0 0 currentColor, 75vw 162.5vw 0 0 currentColor, 62.5vw 175vw 0 0 currentColor, 50vw 187.5vw 0 0 currentColor, 37.5vw 200vw 0 0 currentColor, 25vw 212.5vw 0 0 currentColor, 12.5vw 225vw 0 0 currentColor; }
+  53.8% { opacity: 0; box-shadow: 100vw 137.5vw 0 0 currentColor, 87.5vw 150vw 0 0 currentColor, 75vw 162.5vw 0 0 currentColor, 62.5vw 175vw 0 0 currentColor, 50vw 187.5vw 0 0 currentColor, 37.5vw 200vw 0 0 currentColor, 25vw 212.5vw 0 0 currentColor, 12.5vw 225vw 0 0 currentColor; }
+  53.9% { opacity: 0; box-shadow: 100vw 150vw 0 0 currentColor, 87.5vw 162.5vw 0 0 currentColor, 75vw 175vw 0 0 currentColor, 62.5vw 187.5vw 0 0 currentColor, 50vw 200vw 0 0 currentColor, 37.5vw 212.5vw 0 0 currentColor, 25vw 225vw 0 0 currentColor, 12.5vw 237.5vw 0 0 currentColor; }
+
+  54.0% { opacity: 0; box-shadow: 100vw 150vw 0 0 currentColor, 87.5vw 162.5vw 0 0 currentColor, 75vw 175vw 0 0 currentColor, 62.5vw 187.5vw 0 0 currentColor, 50vw 200vw 0 0 currentColor, 37.5vw 212.5vw 0 0 currentColor, 25vw 225vw 0 0 currentColor, 12.5vw 237.5vw 0 0 currentColor; }
+  55.5% { opacity: 1; box-shadow: 100vw 150vw 0 0 currentColor, 87.5vw 162.5vw 0 0 currentColor, 75vw 175vw 0 0 currentColor, 62.5vw 187.5vw 0 0 currentColor, 50vw 200vw 0 0 currentColor, 37.5vw 212.5vw 0 0 currentColor, 25vw 225vw 0 0 currentColor, 12.5vw 237.5vw 0 0 currentColor; }
+  56.8% { opacity: 0; box-shadow: 100vw 150vw 0 0 currentColor, 87.5vw 162.5vw 0 0 currentColor, 75vw 175vw 0 0 currentColor, 62.5vw 187.5vw 0 0 currentColor, 50vw 200vw 0 0 currentColor, 37.5vw 212.5vw 0 0 currentColor, 25vw 225vw 0 0 currentColor, 12.5vw 237.5vw 0 0 currentColor; }
+  56.9% { opacity: 0; box-shadow: 100vw 162.5vw 0 0 currentColor, 87.5vw 175vw 0 0 currentColor, 75vw 187.5vw 0 0 currentColor, 62.5vw 200vw 0 0 currentColor, 50vw 212.5vw 0 0 currentColor, 37.5vw 225vw 0 0 currentColor, 25vw 237.5vw 0 0 currentColor, 12.5vw 250vw 0 0 currentColor; }
+
+  57.0% { opacity: 0; box-shadow: 100vw 162.5vw 0 0 currentColor, 87.5vw 175vw 0 0 currentColor, 75vw 187.5vw 0 0 currentColor, 62.5vw 200vw 0 0 currentColor, 50vw 212.5vw 0 0 currentColor, 37.5vw 225vw 0 0 currentColor, 25vw 237.5vw 0 0 currentColor, 12.5vw 250vw 0 0 currentColor; }
+  58.5% { opacity: 1; box-shadow: 100vw 162.5vw 0 0 currentColor, 87.5vw 175vw 0 0 currentColor, 75vw 187.5vw 0 0 currentColor, 62.5vw 200vw 0 0 currentColor, 50vw 212.5vw 0 0 currentColor, 37.5vw 225vw 0 0 currentColor, 25vw 237.5vw 0 0 currentColor, 12.5vw 250vw 0 0 currentColor; }
+  59.8% { opacity: 0; box-shadow: 100vw 162.5vw 0 0 currentColor, 87.5vw 175vw 0 0 currentColor, 75vw 187.5vw 0 0 currentColor, 62.5vw 200vw 0 0 currentColor, 50vw 212.5vw 0 0 currentColor, 37.5vw 225vw 0 0 currentColor, 25vw 237.5vw 0 0 currentColor, 12.5vw 250vw 0 0 currentColor; }
+  100% { opacity: 0; box-shadow: 100vw 162.5vw 0 0 currentColor, 87.5vw 175vw 0 0 currentColor, 75vw 187.5vw 0 0 currentColor, 62.5vw 200vw 0 0 currentColor, 50vw 212.5vw 0 0 currentColor, 37.5vw 225vw 0 0 currentColor, 25vw 237.5vw 0 0 currentColor, 12.5vw 250vw 0 0 currentColor; }
 }
 
 .dashboard-layout {
