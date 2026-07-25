@@ -71,7 +71,7 @@ class MenuPrincipal implements OnInit, OnDestroy {
 
   iniciarConexionWebSocket() {
     this.stompClient = new Client({
-      brokerURL: 'ws://localhost:8080/ws-chess',
+      brokerURL: 'wss://grandmaster-s-edge.onrender.com/ws-chess',
       onConnect: () => {
         console.log('Conectado al servidor de Matchmaking');
 
