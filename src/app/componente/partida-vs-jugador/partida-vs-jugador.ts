@@ -241,6 +241,7 @@ export class PartidaVsJugador implements OnInit, OnDestroy {
   flechasDibujadas: { id: string, pathData: string }[] = [];
   cuadroInicioFlecha: string | null = null;
 
+  isWebSocketConnected: boolean = false;
   @ViewChild('cropImageRef') cropImageRef!: ElementRef<HTMLImageElement>;
   cropBox: { x: number, y: number, w: number, h: number } | null = null;
   isDraggingCrop: boolean = false;
@@ -277,9 +278,15 @@ export class PartidaVsJugador implements OnInit, OnDestroy {
   }
 
   iniciarConexionWebSocket() {
+    const token = localStorage.getItem('token');
     this.stompClient = new Client({
       brokerURL: 'wss://grandmaster-s-edge.onrender.com/ws-chess',
+      connectHeaders: {
+        Authorization: `Bearer ${token}`
+      },
       onConnect: () => {
+        console.log('Conectado al servidor de Matchmaking');
+        this.isWebSocketConnected = true;
         this.stompClient.subscribe(`/queue/match/${this.jugador.id}`, (mensaje) => {
           const datos = JSON.parse(mensaje.body);
 

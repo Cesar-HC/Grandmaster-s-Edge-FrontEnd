@@ -56,6 +56,7 @@ class MenuPrincipal implements OnInit, OnDestroy {
   searchQuery: string = '';
   enteredPassword: string = '';
   selectedRoomToJoin: any = null;
+  isWebSocketConnected: boolean = false;
 
   availableRooms: any[];
 
@@ -70,10 +71,15 @@ class MenuPrincipal implements OnInit, OnDestroy {
   }
 
   iniciarConexionWebSocket() {
+    const token = localStorage.getItem('token');
     this.stompClient = new Client({
       brokerURL: 'wss://grandmaster-s-edge.onrender.com/ws-chess',
+      connectHeaders: {
+        Authorization: `Bearer ${token}`
+      },
       onConnect: () => {
         console.log('Conectado al servidor de Matchmaking');
+        this.isWebSocketConnected = true;
 
         this.stompClient.subscribe(`/queue/match/${this.idJugador}`, (mensaje) => {
           const datos = JSON.parse(mensaje.body);
