@@ -13,7 +13,7 @@
   background-color: #030303;
   background-image: conic-gradient(#0a0a0a 90deg, transparent 90deg 180deg, #0a0a0a 180deg 270deg, transparent 270deg);
   background-size: 25svw 25svw;
-  background-attachment: scroll !important;
+  background-attachment: fixed !important;
   width: 100%;
   flex: 1;
   display: flex;
@@ -24,7 +24,7 @@
 .board-background::before,
 .board-background::after {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   display: block;
   margin-bottom: -12.5svw;
@@ -57,21 +57,37 @@
 @keyframes random-flash-1 {
   0%, 4% { opacity: 0; transform: translate(12.5svw, 12.5svw); }
   6% { opacity: 1; transform: translate(12.5svw, 12.5svw); }
-  10%, 48% { opacity: 0; transform: translate(12.5svw, 12.5svw); }
+  10%, 23% { opacity: 0; transform: translate(12.5svw, 12.5svw); }
 
-  50%, 54% { opacity: 0; transform: translate(62.5svw, 25svw); }
-  56% { opacity: 1; transform: translate(62.5svw, 25svw); }
-  60%, 100% { opacity: 0; transform: translate(62.5svw, 25svw); }
+  25%, 29% { opacity: 0; transform: translate(62.5svw, 87.5svw); }
+  31% { opacity: 1; transform: translate(62.5svw, 87.5svw); }
+  35%, 48% { opacity: 0; transform: translate(62.5svw, 87.5svw); }
+
+  50%, 54% { opacity: 0; transform: translate(37.5svw, 162.5svw); }
+  56% { opacity: 1; transform: translate(37.5svw, 162.5svw); }
+  60%, 73% { opacity: 0; transform: translate(37.5svw, 162.5svw); }
+
+  75%, 79% { opacity: 0; transform: translate(87.5svw, 37.5svw); }
+  81% { opacity: 1; transform: translate(87.5svw, 37.5svw); }
+  85%, 100% { opacity: 0; transform: translate(87.5svw, 37.5svw); }
 }
 
 @keyframes random-flash-2 {
   0%, 4% { opacity: 0; transform: translate(75svw, 0svw); }
   6% { opacity: 1; transform: translate(75svw, 0svw); }
-  10%, 48% { opacity: 0; transform: translate(75svw, 0svw); }
+  10%, 23% { opacity: 0; transform: translate(75svw, 0svw); }
 
-  50%, 54% { opacity: 0; transform: translate(37.5svw, 37.5svw); }
-  56% { opacity: 1; transform: translate(37.5svw, 37.5svw); }
-  60%, 100% { opacity: 0; transform: translate(37.5svw, 37.5svw); }
+  25%, 29% { opacity: 0; transform: translate(12.5svw, 112.5svw); }
+  31% { opacity: 1; transform: translate(12.5svw, 112.5svw); }
+  35%, 48% { opacity: 0; transform: translate(12.5svw, 112.5svw); }
+
+  50%, 54% { opacity: 0; transform: translate(87.5svw, 187.5svw); }
+  56% { opacity: 1; transform: translate(87.5svw, 187.5svw); }
+  60%, 73% { opacity: 0; transform: translate(87.5svw, 187.5svw); }
+
+  75%, 79% { opacity: 0; transform: translate(37.5svw, 62.5svw); }
+  81% { opacity: 1; transform: translate(37.5svw, 62.5svw); }
+  85%, 100% { opacity: 0; transform: translate(37.5svw, 62.5svw); }
 }
 
 .hero-section {
