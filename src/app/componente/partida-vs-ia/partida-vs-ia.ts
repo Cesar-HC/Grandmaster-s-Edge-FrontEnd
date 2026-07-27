@@ -258,9 +258,7 @@ export class PartidaVsIa implements OnInit, OnDestroy {
     if (this.currentReviewIndex !== null) return;
     this.borrarFlechas();
     const piece = this.chess.get(squareId as any);
-    if (!this.selectedSquare) {
-      return;
-    }
+
     if (this.chess.turn()) return;
 
     if (this.selectedSquare && this.possibleMoves.includes(squareId)) {
