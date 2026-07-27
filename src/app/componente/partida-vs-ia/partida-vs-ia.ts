@@ -256,10 +256,10 @@ export class PartidaVsIa implements OnInit, OnDestroy {
   onSquareClick(squareId: string) {
     if (!this.partidaEnCurso) return;
     if (this.currentReviewIndex !== null) return;
+    if (this.chess.turn() === 'b') return;
+
     this.borrarFlechas();
     const piece = this.chess.get(squareId as any);
-
-    if (this.chess.turn()) return;
 
     if (this.selectedSquare && this.possibleMoves.includes(squareId)) {
       this.executeMove(this.selectedSquare, squareId);
