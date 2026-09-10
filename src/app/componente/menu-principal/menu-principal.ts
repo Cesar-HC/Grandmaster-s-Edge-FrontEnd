@@ -73,7 +73,7 @@ class MenuPrincipal implements OnInit, OnDestroy {
   iniciarConexionWebSocket() {
     const token = localStorage.getItem('token');
     this.stompClient = new Client({
-      brokerURL: 'wss://grandmaster-s-edge.onrender.com/ws-chess',
+      brokerURL: 'ws://localhost:8080/ws',
       connectHeaders: {
         Authorization: `Bearer ${token}`
       },
