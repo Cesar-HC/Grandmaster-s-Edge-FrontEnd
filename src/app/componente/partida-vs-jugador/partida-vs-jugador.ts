@@ -280,7 +280,7 @@ export class PartidaVsJugador implements OnInit, OnDestroy {
   iniciarConexionWebSocket() {
     const token = localStorage.getItem('token');
     this.stompClient = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: 'ws://localhost:8080/ws-chess',
       connectHeaders: {
         Authorization: `Bearer ${token}`
       },
